@@ -2,6 +2,7 @@ package proyectoGestion;
 
 import java.util.Scanner;
 
+import proyectoModelos.Usuario;
 
 public class menuPredeterminado {
 
@@ -9,19 +10,42 @@ public class menuPredeterminado {
 	public static Scanner inputString = new Scanner(System.in);
 
 	public static void main(String[] args) {
-
-	
-
+		menuMarco();
 	}
 
 	/**
 	 * @author Manuel Pantallazo incial del menu. Aqui almacenaremos la informacion
-	 *         que queramos mostrar por pantalla
+	 *         que queramos mostrar por pantalla y la seleccionaremos con un numero.
 	 * 
 	 * 
 	 */
-	private static void pantallazoMenu() {
-		// TODO implementar SYSOS
+	private static void almacenPantallazos(int numeroPantallazo) {
+		String bloqueTexto;
+		switch (numeroPantallazo) {
+		case 1:
+			bloqueTexto = """
+					¿Qué desea hacer?
+					 1. - Añadir una nueva persona
+					 2. - Buscar emparejamientos
+					 3. - Salir del programa
+					 """;
+			System.out.println(bloqueTexto);
+
+			break;
+		case 2:
+			bloqueTexto = """
+					¿Como desea buscar?
+					1. - Filtrando
+					2. - Personas con más datos en común
+					3. - Personas con aficiones opuestas
+					4.- Búsqueda aleatoria
+										""";
+			System.out.println(bloqueTexto);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -32,7 +56,7 @@ public class menuPredeterminado {
 	 * @return
 	 * 
 	 */
-	private static int pantallaSwitch(int opcionUsuario) {
+	private static int pantallaSwitchUsuario(int opcionUsuario) {
 		// TODO Revisar si existe alguna manera de generar CASES DINAMICOS
 		// Es decir, generar un numero de CASES en funcion del problema para así no
 		// crear varios metodos
@@ -40,7 +64,7 @@ public class menuPredeterminado {
 		try {
 			switch (opcionUsuario) { // En cada case esta indicado el contenido del metodo pantallazoMenu
 			case 1:
-
+				crearUsuario();
 				break;
 
 			case 2:
@@ -64,10 +88,16 @@ public class menuPredeterminado {
 		int opcionUsuario;
 
 		do {
-			pantallazoMenu();
+			almacenPantallazos(1);
 			opcionUsuario = inputInt.nextInt();
-			opcionUsuario = pantallaSwitch(opcionUsuario);
+			opcionUsuario = pantallaSwitchUsuario(opcionUsuario);
 		} while (opcionUsuario != 3);
+
+	}
+
+	public static void crearUsuario() {
+		//TODO buscar una manera eficiente de crear un formulario para crear un objeto Usuario.
+		// Usuario prueba = new Usuario(null, null, null, null, null, null, false, false, null, null, null, null);
 
 	}
 }
