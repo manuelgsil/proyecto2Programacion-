@@ -1,3 +1,4 @@
+
 package proyectoModelos;
 
 public class UsuarioPremium extends Usuario  {
