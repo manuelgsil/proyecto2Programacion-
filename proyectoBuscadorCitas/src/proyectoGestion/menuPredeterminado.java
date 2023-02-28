@@ -1,5 +1,6 @@
 package proyectoGestion;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -12,15 +13,15 @@ public class menuPredeterminado {
 	public static Scanner inputString = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		mostrarInteresesDisponibles();
+		crearUsuario();
 
 	}
 
 	/**
-	 * @author Manuel 
+	 * @author Manuel
 	 * 
-	 * Metodo donde almacenanmos una variable String con el texto
-	 * de cada menu para usarlo en distintas partes del codigo
+	 *         Metodo donde almacenanmos una variable String con el texto de cada
+	 *         menu para usarlo en distintas partes del codigo
 	 * 
 	 * 
 	 */
@@ -53,9 +54,9 @@ public class menuPredeterminado {
 		}
 	}
 
-	/**@author Manuel
-	 * Metodo que sirve como primer menu principal y donde anidaremos los metodos
-	 * principales
+	/**
+	 * @author Manuel Metodo que sirve como primer menu principal y donde anidaremos
+	 *         los metodos principales
 	 */
 	private static void menuMarco() {
 
@@ -87,38 +88,79 @@ public class menuPredeterminado {
 
 	/**
 	 * @author Manuel
+	 * Metodo para crear una instancia de Usuario por parametros. Tiene anidados varios metodos tantos de esta clase
+	 * como de la clase Util.
 	 */
 	public static void crearUsuario() {
 		/*
 		 * TODO Desarrollar este metodo para que mediante una serie de preguntas
 		 * almacenemos la informacion neceseria para pasarselo al constructor de clase
 		 */
+
+		/*
+			
+		 */
+		Usuario usuarioPrueba=new Usuario();
+		System.out.println(usuarioPrueba);
+		String nombre, apellido, ciudad, idioma, descripcion, preferencias,contrasenia;
+		LocalDate fechaNacimiento;
+		ArrayList<String> interesesUsuario = new ArrayList<>();
+
+		System.out.print("Nombre: ");
+		nombre = inputString.next();
+		System.out.print("Apellido: ");
+		apellido = inputString.next();
+		System.out.println("Ingrese su fecha de nacimiento");
+		fechaNacimiento = Util.solicitarFecha();
+		System.out.print("Ciudad: ");
+		ciudad = inputString.next();
+		System.out.print("Idioma: ");
+		idioma = inputString.next();
+		System.out.print("Descripcion: ");
+		descripcion = inputString.next();
 		
+		System.out.println("Escoja sus preferencias : HETERO | HOmO | BI ");
+		preferencias = inputString.next();
+		// TODO REALIZAR BUCLE	
+		if (!(preferencias.equalsIgnoreCase("hetero") || preferencias.equalsIgnoreCase("Homo")
+				|| preferencias.equalsIgnoreCase("bi")))
+		System.out.println("Revise su eleccion");
 		
+		interesesUsuario = mostrarInteresesDisponibles(); // Revisar esto posteriormente. Me da que podria plantearse mejor
+		System.out.println("Por ultimo introduzca una contrasenia: ");
+		contrasenia=inputString.next();
 	
+
+		
+
+					
+		Usuario usuarioNuevo = new Usuario(nombre,apellido,fechaNacimiento,ciudad,idioma,contrasenia,descripcion,preferencias,interesesUsuario);
+		
+System.out.println(usuarioNuevo);
 	}
 
-	private static void mostrarInteresesDisponibles() {
-		// TODO La lista de intereses es provisional. Habra que retocarla de cara al final
-		
+	private static ArrayList<String> mostrarInteresesDisponibles() {
+		// TODO La lista de intereses es provisional. Habra que retocarla de cara al
+		// final
+
 		String interesUnico = null; // String que usaremos para almacenar la opcion del usuario
 		ArrayList<String> interesesUsuario = new ArrayList<>(); // Lista dinamica con la que podremos darle elasticidad
 																// a las opciones
 		// y al perfil por si quisiera modificar algo
 		String bloqueTexto;
 		boolean bandera = true;
-	
+
 		// Declaramos una lista dinamica para poder añadir o quitar posteriormente
-	
+
 		String[][] listaIntereses = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo" },
 				{ "Música:", "Rock", "Pop", "Electrónica" }, { "Arte y cultura:", "Pintura" },
 				{ "Mascotas:", "Perros", "Gatos" }, { "Comida:", "Italiana", "Japonesa", "Mexicana" },
 				{ "Bienestar y salud:", "Yoga", "Realfooder" }, { "Tecnología:", "Informatica", "Hardware" },
 				{ "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
 				{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" },
-	
+
 		};
-	
+
 		// Imprimir filas de datos
 		for (int i = 0; i < listaIntereses.length; i++) {
 			System.out.printf("%-3d", i + 1);
@@ -127,28 +169,29 @@ public class menuPredeterminado {
 			}
 			System.out.println();
 		}
-	
+
 		bloqueTexto = """
-	
+
 				Debe seleccionar un minimo de 3 intereses.
 				Escriba sus prefrencias despues de la lista.
 				Cuando finalice o desee acabar, teclee fin.
-	
+
 				""";
-		System.out.printf(bloqueTexto);
-	
+		System.out.print(bloqueTexto);
+
 		while (bandera) {
-	
+
 			interesUnico = inputString.next();
-	
+
 			if (interesUnico.equalsIgnoreCase("fin"))
 				bandera = false;
-	
+
 			else
 				interesesUsuario = agregarInteresesUsuario(listaIntereses, interesUnico, interesesUsuario);
-	
+
 		}
-	
+		return interesesUsuario;
+
 	}
 
 	/**
@@ -170,20 +213,20 @@ public class menuPredeterminado {
 	 */
 	private static ArrayList<String> agregarInteresesUsuario(String[][] interesesPermitidos, String interesEscogido,
 			ArrayList<String> interesesUsuario) {
-	
+
 		// TODO poner algun tipo de mensaje para comentarle al usuario si se ha añadido
 		// o no algo a su lista
-	
+
 		for (int i = 0; i < interesesPermitidos.length; i++) {
 			for (int j = 1; j < interesesPermitidos[i].length; j++) { // Controlamos que no se pueda introducir el
 																		// INDICE
-	
+
 				if (interesesPermitidos[i][j].equalsIgnoreCase(interesEscogido)
 						&& !interesesUsuario.contains(interesEscogido)) // Ignore case para que no haya problemas
 					interesesUsuario.add(interesEscogido);
 			}
 		}
-	
+
 		return interesesUsuario;
 	}
 }

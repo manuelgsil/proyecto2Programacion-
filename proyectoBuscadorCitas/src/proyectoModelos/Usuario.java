@@ -8,13 +8,11 @@ public class Usuario {
 	private static int numeroUsuarios;
 
 	protected String nombre;
-	protected String apellidos;
+	protected String apellido;
 	protected LocalDate fechaNacimiento;
 	protected String ciudadNacimiento;
 	protected String idioma;
-	protected String alias;
-	protected boolean buscarPareja;
-	protected boolean buscarAmistad;
+
 	protected String contrasenia;
 	protected String descripcion;
 	protected String preferencias;
@@ -24,31 +22,26 @@ public class Usuario {
 		super();
 
 		nombre = "UsuarioPrueba";
-		apellidos = "ProbarApellido";
+		apellido = "ProbarApellido";
 		fechaNacimiento = LocalDate.of(1993, 03, 14);
 		ciudadNacimiento = "Sevilla";
 		idioma = "Español";
-		alias = "eldemonio";
-		buscarAmistad = true;
-		buscarPareja = false;
+
 		contrasenia = "123Ma!";
 		descripcion = "en una palabra: betico";
 		preferencias = "indiferente";
 		Usuario.numeroUsuarios++;
 	}
 
-	public Usuario(String nombre, String apellidos, LocalDate fechaNacimiento, String ciudadNacimiento, String idioma,
-			String alias, boolean buscarPareja, boolean buscarAmistad, String contrasenia, String descripcion,
-			String preferencias, ArrayList<String> intereses) {
+	public Usuario(String nombre, String apellido, LocalDate fechaNacimiento, String ciudadNacimiento, String idioma,
+			String contrasenia, String descripcion, String preferencias, ArrayList<String> intereses) {
 		super();
 		this.nombre = nombre;
-		this.apellidos = apellidos;
+		this.apellido = apellido;
 		this.fechaNacimiento = fechaNacimiento;
 		this.ciudadNacimiento = ciudadNacimiento;
 		this.idioma = idioma;
-		this.alias = alias;
-		this.buscarPareja = buscarPareja;
-		this.buscarAmistad = buscarAmistad;
+
 		this.contrasenia = contrasenia;
 		this.descripcion = descripcion;
 		this.preferencias = preferencias;
@@ -57,18 +50,6 @@ public class Usuario {
 
 	public static int getNumeroUsuarios() {
 		return numeroUsuarios;
-	}
-
-	public String getAlias() {
-		return alias;
-	}
-
-	public boolean isBuscarPareja() {
-		return buscarPareja;
-	}
-
-	public boolean isBuscarAmistad() {
-		return buscarAmistad;
 	}
 
 	public String getContrasenia() {
@@ -85,18 +66,6 @@ public class Usuario {
 
 	public static void setNumeroUsuarios(int numeroUsuarios) {
 		Usuario.numeroUsuarios = numeroUsuarios;
-	}
-
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
-	public void setBuscarPareja(boolean buscarPareja) {
-		this.buscarPareja = buscarPareja;
-	}
-
-	public void setBuscarAmistad(boolean buscarAmistad) {
-		this.buscarAmistad = buscarAmistad;
 	}
 
 	public void setContrasenia(String contrasenia) {
@@ -119,6 +88,32 @@ public class Usuario {
 	public int getEdad() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String toString() {
+		String output = "+------------------+---------------------+\n";
+		output += String.format("| %-16s | %-19s |%n", "Nombre", nombre);
+		output += "+------------------+---------------------+\n";
+		output += String.format("| %-16s | %-19s |%n", "Apellido", apellido);
+		output += "+------------------+---------------------+\n";
+		output += String.format("| %-3s : %-16s |%n", "Fecha de Nacimiento", fechaNacimiento);
+		output += "+------------------+---------------------+\n";
+		output += String.format("| %-1s : %-15s |%n", "Ciudad de Nacimiento", ciudadNacimiento);
+		output += "+------------------+---------------------+\n";
+		output += String.format("| %-16s | %-19s |%n", "Idioma", idioma);
+		output += "+------------------+---------------------+\n";
+		output += String.format("| %-16s | %-19s |%n", "Preferencias", preferencias);
+		output += "+------------------+---------------------+\n";
+		output += String.format("| %-16s | %-19s |%n", "Intereses", intereses);
+		output += "+------------------+---------------------+\n";
+		  output += "\nDescripción:\n";
+	        output += "+----------------------------------------+\n";
+	        output += String.format("| %-38s |%n", descripcion);
+	        output += "+----------------------------------------+\n";
+
+		return output;
+
 	}
 
 }
