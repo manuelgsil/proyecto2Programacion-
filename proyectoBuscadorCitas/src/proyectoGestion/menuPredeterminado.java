@@ -2,7 +2,7 @@ package proyectoGestion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 import proyectoModelos.Usuario;
@@ -10,11 +10,51 @@ import proyectoModelos.Usuario;
 public class menuPredeterminado {
 
 	private static Scanner inputInt = new Scanner(System.in);
-	public static Scanner inputString = new Scanner(System.in);
+	private static Scanner inputString = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		crearUsuario();
+		List<Usuario> filtro = new ArrayList<>();
+		Usuario usuarioPrueba = new Usuario();
+		filtro.add(usuarioPrueba);
 
+	System.out.println(usuarioPrueba);
+	
+	
+	String nombre, apellido, ciudad, idioma, descripcion, preferencias, contrasenia;
+	LocalDate fechaNacimiento;
+	ArrayList<String> interesesUsuario = new ArrayList<>();
+
+
+	System.out.print("Nombre: ");
+	nombre = inputString.next();
+	System.out.print("Apellido: ");
+	apellido = inputString.next();
+	System.out.println("Ingrese su fecha de nacimiento");
+	fechaNacimiento = Util.solicitarFecha();
+	System.out.print("Ciudad: ");
+	ciudad = inputString.next();
+	System.out.print("Idioma: ");
+	idioma = inputString.next();
+	System.out.print("Descripcion: ");
+	descripcion = inputString.next();
+
+	System.out.println("Escoja sus preferencias : HETERO | HOmO | BI ");
+	preferencias = inputString.next();
+	// TODO REALIZAR BUCLE
+	if (!(preferencias.equalsIgnoreCase("hetero") || preferencias.equalsIgnoreCase("Homo")
+			|| preferencias.equalsIgnoreCase("bi")))
+		System.out.println("Revise su eleccion");
+
+	interesesUsuario = mostrarInteresesDisponibles(); // Revisar esto posteriormente. Me da que podria plantearse
+														// mejor
+	System.out.println("Por ultimo introduzca una contrasenia: ");
+	contrasenia = inputString.next();
+
+	Usuario usuarioNuevo = new Usuario(nombre, apellido, fechaNacimiento, ciudad, idioma, contrasenia, descripcion,
+			preferencias, interesesUsuario);
+
+	System.out.println(usuarioNuevo.calcularCompatiblidad(usuarioPrueba));
+		
 	}
 
 	/**
@@ -87,22 +127,23 @@ public class menuPredeterminado {
 	}
 
 	/**
-	 * @author Manuel
-	 * Metodo para crear una instancia de Usuario por parametros. Tiene anidados varios metodos tantos de esta clase
-	 * como de la clase Util.
+	 * @author Manuel Metodo para crear una instancia de Usuario por parametros.
+	 *         Tiene anidados varios metodos tantos de esta clase como de la clase
+	 *         Util.
 	 */
 	public static void crearUsuario() {
 		/*
 		 * TODO Desarrollar este metodo para que mediante una serie de preguntas
+		 * .
 		 * almacenemos la informacion neceseria para pasarselo al constructor de clase
 		 */
 
 		/*
 			
 		 */
-		Usuario usuarioPrueba=new Usuario();
+		Usuario usuarioPrueba = new Usuario();
 		System.out.println(usuarioPrueba);
-		String nombre, apellido, ciudad, idioma, descripcion, preferencias,contrasenia;
+		String nombre, apellido, ciudad, idioma, descripcion, preferencias, contrasenia;
 		LocalDate fechaNacimiento;
 		ArrayList<String> interesesUsuario = new ArrayList<>();
 
@@ -118,25 +159,23 @@ public class menuPredeterminado {
 		idioma = inputString.next();
 		System.out.print("Descripcion: ");
 		descripcion = inputString.next();
-		
+
 		System.out.println("Escoja sus preferencias : HETERO | HOmO | BI ");
 		preferencias = inputString.next();
-		// TODO REALIZAR BUCLE	
+		// TODO REALIZAR BUCLE
 		if (!(preferencias.equalsIgnoreCase("hetero") || preferencias.equalsIgnoreCase("Homo")
 				|| preferencias.equalsIgnoreCase("bi")))
-		System.out.println("Revise su eleccion");
-		
-		interesesUsuario = mostrarInteresesDisponibles(); // Revisar esto posteriormente. Me da que podria plantearse mejor
+			System.out.println("Revise su eleccion");
+
+		interesesUsuario = mostrarInteresesDisponibles(); // Revisar esto posteriormente. Me da que podria plantearse
+															// mejor
 		System.out.println("Por ultimo introduzca una contrasenia: ");
-		contrasenia=inputString.next();
-	
+		contrasenia = inputString.next();
 
-		
+		Usuario usuarioNuevo = new Usuario(nombre, apellido, fechaNacimiento, ciudad, idioma, contrasenia, descripcion,
+				preferencias, interesesUsuario);
 
-					
-		Usuario usuarioNuevo = new Usuario(nombre,apellido,fechaNacimiento,ciudad,idioma,contrasenia,descripcion,preferencias,interesesUsuario);
-		
-System.out.println(usuarioNuevo);
+		System.out.println(usuarioNuevo);
 	}
 
 	private static ArrayList<String> mostrarInteresesDisponibles() {

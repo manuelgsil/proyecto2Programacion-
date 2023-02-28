@@ -24,7 +24,7 @@ public class Filtro {
 	    public static List<Usuario> filtrarPorCiudad( List<Usuario> ciudades,String ciudad) {
 	        List<Usuario> filtradas = new ArrayList<>();
 	        for (Usuario c : ciudades) {
-	            if (c.getCiudad().equalsIgnoreCase(ciudad)) {
+	            if (c.getciudad().equalsIgnoreCase(ciudad)) {
 	                filtradas.add(c);
 	            }
 	        }
