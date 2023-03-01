@@ -9,6 +9,8 @@ import java.time.format.DateTimeParseException;
 import java.util.Random;
 import java.util.Scanner;
 
+
+
 public class Util {
 	private static Scanner inputInt = new Scanner(System.in);
 
@@ -103,4 +105,6 @@ public class Util {
 		}
 
 	}
+	
+
 }

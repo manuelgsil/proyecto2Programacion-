@@ -19,7 +19,7 @@ public class Usuario {
 	protected String contrasenia;
 	protected String descripcion;
 	protected String preferencias;
-	protected ArrayList<String> intereses= new ArrayList();
+	protected ArrayList<String> intereses = new ArrayList();
 
 	public Usuario() {
 		super();
@@ -29,11 +29,13 @@ public class Usuario {
 		fechaNacimiento = LocalDate.of(1993, 03, 14);
 		ciudad = "Sevilla";
 		idioma = "Español";
-		edad=29;
+		edad = 29;
 		contrasenia = "123Ma!";
 		descripcion = "en una palabra: betico";
 		preferencias = "indiferente";
-		this.intereses.add("rpg");this.intereses.add("plataformas");this.intereses.add("informatica");
+		this.intereses.add("rpg");
+		this.intereses.add("plataformas");
+		this.intereses.add("informatica");
 		Usuario.numeroUsuarios++;
 	}
 
@@ -45,7 +47,7 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 		this.ciudad = ciudadNacimiento;
 		this.idioma = idioma;
-		this.edad=calcularEdad(fechaNacimiento);
+		this.edad = calcularEdad(fechaNacimiento);
 		this.contrasenia = contrasenia;
 		this.descripcion = descripcion;
 		this.preferencias = preferencias;
@@ -140,49 +142,76 @@ public class Usuario {
 	public int getEdad() {
 		return edad;
 	}
-	
-	public int  calcularEdad(LocalDate fechaNacimiento) {
-		LocalDate fechaActual= LocalDate.now();
-	
+
+	public int calcularEdad(LocalDate fechaNacimiento) {
+		LocalDate fechaActual = LocalDate.now();
+
 		return Period.between(fechaNacimiento, fechaActual).getYears();
-		
-		
+
 	}
+
 	public String calcularCompatiblidad(Usuario Usuario_a_comparar) {
-		
+
 		// TODO hay que trabajar sobre este metodo.
-		
+
 		String mensaje = null;
 		int compatiblidad = 0;
 		int diferenciaEdad = Math.abs(this.edad - Usuario_a_comparar.edad);
 		int num_interesesComunes; // Al tamaño del array de cosas comunes que tengan lo voy a multiplicar por 10
-		
+
 		List<String> interesesComunes = new ArrayList<String>(this.intereses);
-		    interesesComunes.retainAll(Usuario_a_comparar.getIntereses());
-		    
-		if(diferenciaEdad<=5)
-			compatiblidad=+10;
-		if(this.ciudad.equals(Usuario_a_comparar.getciudad()))
-			compatiblidad=+10;
-		
-		num_interesesComunes=interesesComunes.size()*10;
-		compatiblidad=+num_interesesComunes;
-		
-		if(this.preferencias.equals(Usuario_a_comparar.preferencias))
-			compatiblidad=+20;
-		
-	// TODO  He planteado esto como un String para ahorrame trabajo posteriormente. Ya veremos si es buena idea o no.
-		
-		if(compatiblidad>100) {
-			mensaje="PARECE QUE SOIS MUY PERO QUE MUY COMPATIBLES. MUY MAL TENDRIA QUE DARSE\nCOMPATIBILIDAD: "
+		interesesComunes.retainAll(Usuario_a_comparar.getIntereses());
+
+		if (diferenciaEdad <= 5)
+			compatiblidad = +10;
+		if (this.ciudad.equals(Usuario_a_comparar.getciudad()))
+			compatiblidad = +10;
+
+		num_interesesComunes = interesesComunes.size() * 10;
+		compatiblidad = +num_interesesComunes;
+
+		if (this.preferencias.equals(Usuario_a_comparar.preferencias))
+			compatiblidad = +20;
+
+		// TODO He planteado esto como un String para ahorrame trabajo posteriormente.
+		// Ya veremos si es buena idea o no.
+
+		if (compatiblidad > 100) {
+			mensaje = "PARECE QUE SOIS MUY PERO QUE MUY COMPATIBLES. MUY MAL TENDRIA QUE DARSE\nCOMPATIBILIDAD: "
 					+ compatiblidad;
+		} else {
+			mensaje = "Tu compatiblidad con este usuario es la siguiente: " + compatiblidad;
 		}
-		else {
-			mensaje="Tu compatiblidad con este usuario es la siguiente: "+compatiblidad;
-		}
-		
+
 		return mensaje;
-		
+
+	}
+
+	public ArrayList<Usuario> filtroBusqueda1(Usuario usuario_a_buscar, int opcionBusqueda) {
+		ArrayList<Usuario> usuariosAfines = new ArrayList<Usuario>();
+
+		switch (opcionBusqueda) {
+		case 1:
+			if (this.ciudad.equalsIgnoreCase(usuario_a_buscar.getciudad())) // Usuarios con la misma ciudad
+				usuariosAfines.add(usuario_a_buscar);
+			break;
+		case 2:
+			if(this.idioma.equalsIgnoreCase(usuario_a_buscar.idioma)) // Usuarios con el mismo idioma
+				usuariosAfines.add(usuario_a_buscar);
+			break;
+		case 3:														// encontrar por rango de edad
+			
+
+			break;
+		case 4:														//numero de intereses afines
+
+			break;
+
+		default:
+			break;
+		}
+
+		return usuariosAfines;
 	}
 
 	@Override
@@ -202,10 +231,10 @@ public class Usuario {
 		output += "+------------------+---------------------+\n";
 		output += String.format("| %-16s | %-19s |%n", "Intereses", intereses);
 		output += "+------------------+---------------------+\n";
-		  output += "\nDescripción:\n";
-	        output += "+----------------------------------------+\n";
-	        output += String.format("| %-38s |%n", descripcion);
-	        output += "+----------------------------------------+\n";
+		output += "\nDescripción:\n";
+		output += "+----------------------------------------+\n";
+		output += String.format("| %-38s |%n", descripcion);
+		output += "+----------------------------------------+\n";
 
 		return output;
 
