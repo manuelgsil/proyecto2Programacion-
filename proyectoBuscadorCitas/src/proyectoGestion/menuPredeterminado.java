@@ -104,7 +104,7 @@ public class menuPredeterminado {
 	 */
 	private static void menuMarco() {
 		Usuario usuarioPrograma;
-		
+
 		// TODO Modificarlo segun lo que necesitemos
 
 		int opcionUsuario;
@@ -149,20 +149,20 @@ public class menuPredeterminado {
 		LocalDate fechaNacimiento;
 
 		System.out.print("Introduzca su nombre: ");
-		nombre = Util.pedirString(); // con esto controlamos
+		nombre = Util.pedirString();  // Con el util controlamos que los datos que nos introduzca son validos de por si
 		System.out.print("Ahora su apellido: ");
 		apellido = Util.pedirString();
 		System.out.println("Ingrese su fecha de nacimiento");
-		fechaNacimiento = Util.solicitarFecha();
+		fechaNacimiento = Util.solicitarFecha(); // con este tambien esta validado automaticamente
 
 		System.out.print("Ciudad de residencia: ");
-		ciudad = Util.pedirString();
+		ciudad = Util.pedirString(); // Quiza seria posible controlar esto pero no lo veo necesario ahora mismo
 		System.out.print("Idioma: ");
-		idioma = Util.pedirString();
+		idioma = Util.pedirString(); // tambien controlado
 		System.out.print("Introduzca una descripcion (max 250c)");
-		descripcion = Util.pedirString();
+		descripcion = Util.pedirString(); // AQUI HABRIA QUE CONTROLAR EL LIMITE DE CARACTERES SI QUEREMOS DARLE UN TOQUE GRACIOSO
 		System.out.println("indique su sexo (H/M)");
-		sexo = delimitadorOpcionesCreacionUsuario(2);
+		sexo = delimitadorOpcionesCreacionUsuario(2); // Este es el parametro para el sexo 
 
 		System.out.println("Escoja sus preferencias : HETERO | GAY | BI ");
 		orientacionSexual = delimitadorOpcionesCreacionUsuario(1);
@@ -179,6 +179,14 @@ public class menuPredeterminado {
 		return UsuarioParametros;
 	}
 
+	/**
+	 * @author Manuel Este metodo encapsula la manera de aniadir intereses al
+	 *         usuario en cuestion
+	 * @param usuarioParametros Se debe introducir el usuario que hayamos creado
+	 *                          para ir agregando intereses al arraylist
+	 * @return devuelve un arraylist con todos los intereses seleccionado por el
+	 *         usuario
+	 */
 	static Usuario agregarInteresesUsuario(Usuario usuarioParametros) {
 		boolean bandera = true;
 		String interes;
@@ -194,6 +202,19 @@ public class menuPredeterminado {
 
 	}
 
+	/**
+	 * @author Manuel Metodo 
+	 * 
+	 * 			metodo creado para encapsular el numero de condicionales en la
+	 *         funcion {@link #crearUsuario()} mediante un switch. Segun la opcion
+	 *         que marquemos nos verificara un dato segun distintas condiciones.
+	 * 
+	 * 
+	 * @param numeroSwitch tenemos que indicar que case queremos aplicar
+	 * 				SIENDO EL 1 PARA LA ORIENTACION SEXUAL
+	 * 				Y EL 2 PARA SU SEXO
+	 * @return el dato verificado segun los parametros de cada condicion
+	 */
 	public static String delimitadorOpcionesCreacionUsuario(int numeroSwitch) {
 // con este metodo auxiliar vamos a controlar las entradas de datos que necesitan de algo mas de verificacion
 		// las que no puedo controlar con el Util.pedirString vaya
