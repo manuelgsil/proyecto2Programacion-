@@ -13,48 +13,44 @@ public class menuPredeterminado {
 	private static Scanner inputString = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		List<Usuario> filtro = new ArrayList<>();
-		Usuario usuarioPrueba = new Usuario();
-		filtro.add(usuarioPrueba);
 
-	System.out.println(usuarioPrueba);
-	
-	
-	String nombre, apellido, ciudad, idioma, descripcion, preferencias, contrasenia;
-	LocalDate fechaNacimiento;
-	ArrayList<String> interesesUsuario = new ArrayList<>();
+		crearUsuario();
 
+		// ArrayList<Usuario> usuarios = new ArrayList<>();
 
-	System.out.print("Nombre: ");
-	nombre = inputString.next();
-	System.out.print("Apellido: ");
-	apellido = inputString.next();
-	System.out.println("Ingrese su fecha de nacimiento");
-	fechaNacimiento = Util.solicitarFecha();
-	System.out.print("Ciudad: ");
-	ciudad = inputString.next();
-	System.out.print("Idioma: ");
-	idioma = inputString.next();
-	System.out.print("Descripcion: ");
-	descripcion = inputString.next();
+		/*
+		 * usuarios.add(new Usuario("Juan", "Pérez", LocalDate.of(1990, 5, 15),
+		 * "Sevilla", "Espanol", "contraseña1", "Atento y carinioso", "Hetero", new
+		 * ArrayList<String>() {{ add("Futbol"); add("Cine Clasico"); }}));
+		 * usuarios.add(new Usuario("Maria", "Garcia", LocalDate.of(1995, 8, 23),
+		 * "Almeria", "Espanol", "contraseña2", "Simpatica, amiga de mis amigas",
+		 * "Hetero", new ArrayList<String>() {{ add("Perros"); add("Yoga"); }}));
+		 * usuarios.add(new Usuario("John", "Mamon", LocalDate.of(1985, 3, 8), "Huelva",
+		 * "Espanol", "contraseña3", "Fiestero y Trabajador", "Homo", new
+		 * ArrayList<String>() {{ add("Interés 5"); add("Interés 6"); }}));
+		 * usuarios.add(new Usuario("Julia", "Perez", LocalDate.of(2000, 11, 2),
+		 * "Cordoba", "Espanol", "contraseña4", "Soy una chica amable y sincera", "Bi",
+		 * new ArrayList<String>() {{ add("Pintura"); add("Series TV"); }}));
+		 * usuarios.add(new Usuario("Carlos", "Ramirez", LocalDate.of(1992, 1, 20),
+		 * "Jaen", "Espanol", "contraseña5", "Pasional, maniatico", "Hetero", new
+		 * ArrayList<String>() {{ add("Tenis"); add("Videojuegos"); }}));
+		 * usuarios.add(new Usuario("Ana", "Mena", LocalDate.of(1988, 7, 13), "Malaga",
+		 * "Espanol", "contraseña6", "estudiante", "Hetero", new ArrayList<String>() {{
+		 * add("Informatica"); add("Futbol"); }})); usuarios.add(new Usuario("Miguel",
+		 * "Gutiérrez", LocalDate.of(1998, 4, 29), "Malaga", "Espanol", "contraseña7",
+		 * "atento, amable, risueño", "Bi", new ArrayList<String>() {{ add("Boxeo");
+		 * add("Perros"); }})); usuarios.add(new Usuario("Sofia", "Moreno",
+		 * LocalDate.of(1983, 9, 6), "Huelva", "Espanol", "contraseña8",
+		 * "Descripción 8", "Homo", new ArrayList<String>() {{ add("Hardware");
+		 * add("Pop"); }})); usuarios.add(new Usuario("Jorge", "Gonzalez",
+		 * LocalDate.of(1991, 12, 17), "Sevilla", "Espanol", "contraseña9",
+		 * "Perfeccionista, atento", "Bi", new ArrayList<String>() {{ add("Realfooder");
+		 * add("Baloncesto"); }})); usuarios.add(new Usuario("Tomas", "Demileche",
+		 * LocalDate.of(1991, 12, 17), "Jaen", "Espanol", "contraseña10",
+		 * "Puntual, responsable", "Hetero", new ArrayList<String>() {{ add("Gatos");
+		 * add("Italiano"); }}));
+		 */
 
-	System.out.println("Escoja sus preferencias : HETERO | HOmO | BI ");
-	preferencias = inputString.next();
-	// TODO REALIZAR BUCLE
-	if (!(preferencias.equalsIgnoreCase("hetero") || preferencias.equalsIgnoreCase("Homo")
-			|| preferencias.equalsIgnoreCase("bi")))
-		System.out.println("Revise su eleccion");
-
-	interesesUsuario = mostrarInteresesDisponibles(); // Revisar esto posteriormente. Me da que podria plantearse
-														// mejor
-	System.out.println("Por ultimo introduzca una contrasenia: ");
-	contrasenia = inputString.next();
-
-	Usuario usuarioNuevo = new Usuario(nombre, apellido, fechaNacimiento, ciudad, idioma, contrasenia, descripcion,
-			preferencias, interesesUsuario);
-
-	System.out.println(usuarioNuevo.calcularCompatiblidad(usuarioPrueba));
-		
 	}
 
 	/**
@@ -88,6 +84,14 @@ public class menuPredeterminado {
 										""";
 			System.out.println(bloqueTexto);
 			break;
+		case 3:
+			bloqueTexto = """
+					A continuacion podra introducir los datos de su ficha como usuario
+
+					Si no esta contento con el resultado puede volver a introducir los datos
+											""";
+			System.out.println(bloqueTexto);
+			break;
 
 		default:
 			break;
@@ -99,7 +103,8 @@ public class menuPredeterminado {
 	 *         los metodos principales
 	 */
 	private static void menuMarco() {
-
+		Usuario usuarioPrograma;
+		
 		// TODO Modificarlo segun lo que necesitemos
 
 		int opcionUsuario;
@@ -109,7 +114,7 @@ public class menuPredeterminado {
 			opcionUsuario = inputInt.nextInt();
 			switch (opcionUsuario) {
 			case 1:
-				crearUsuario();
+				usuarioPrograma = crearUsuario();
 
 				break;
 			case 2:
@@ -131,141 +136,100 @@ public class menuPredeterminado {
 	 *         Tiene anidados varios metodos tantos de esta clase como de la clase
 	 *         Util.
 	 */
-	public static void crearUsuario() {
-		/*
-		 * TODO Desarrollar este metodo para que mediante una serie de preguntas
-		 * .
-		 * almacenemos la informacion neceseria para pasarselo al constructor de clase
-		 */
-
-		/*
-			
-		 */
-		Usuario usuarioPrueba = new Usuario();
-		System.out.println(usuarioPrueba);
-		String nombre, apellido, ciudad, idioma, descripcion, preferencias, contrasenia;
+	public static Usuario crearUsuario() {
+// En un principio el constructor por parametros esta terminado. Queda hacerle pruebas a muerte.
+		almacenPantallazos(3);
+		String nombre;
+		String apellido;
+		String ciudad;
+		String idioma;
+		String descripcion;
+		String orientacionSexual;
+		String sexo;
 		LocalDate fechaNacimiento;
-		ArrayList<String> interesesUsuario = new ArrayList<>();
 
-		System.out.print("Nombre: ");
-		nombre = inputString.next();
-		System.out.print("Apellido: ");
-		apellido = inputString.next();
+		System.out.print("Introduzca su nombre: ");
+		nombre = Util.pedirString(); // con esto controlamos
+		System.out.print("Ahora su apellido: ");
+		apellido = Util.pedirString();
 		System.out.println("Ingrese su fecha de nacimiento");
 		fechaNacimiento = Util.solicitarFecha();
-		System.out.print("Ciudad: ");
-		ciudad = inputString.next();
+
+		System.out.print("Ciudad de residencia: ");
+		ciudad = Util.pedirString();
 		System.out.print("Idioma: ");
-		idioma = inputString.next();
-		System.out.print("Descripcion: ");
-		descripcion = inputString.next();
+		idioma = Util.pedirString();
+		System.out.print("Introduzca una descripcion (max 250c)");
+		descripcion = Util.pedirString();
+		System.out.println("indique su sexo (H/M)");
+		sexo = delimitadorOpcionesCreacionUsuario(2);
 
-		System.out.println("Escoja sus preferencias : HETERO | HOmO | BI ");
-		preferencias = inputString.next();
-		// TODO REALIZAR BUCLE
-		if (!(preferencias.equalsIgnoreCase("hetero") || preferencias.equalsIgnoreCase("Homo")
-				|| preferencias.equalsIgnoreCase("bi")))
-			System.out.println("Revise su eleccion");
+		System.out.println("Escoja sus preferencias : HETERO | GAY | BI ");
+		orientacionSexual = delimitadorOpcionesCreacionUsuario(1);
 
-		interesesUsuario = mostrarInteresesDisponibles(); // Revisar esto posteriormente. Me da que podria plantearse
-															// mejor
-		System.out.println("Por ultimo introduzca una contrasenia: ");
-		contrasenia = inputString.next();
+		Usuario UsuarioParametros = new Usuario(nombre, apellido, fechaNacimiento, ciudad, idioma, sexo.charAt(0),
+				descripcion, orientacionSexual);
 
-		Usuario usuarioNuevo = new Usuario(nombre, apellido, fechaNacimiento, ciudad, idioma, contrasenia, descripcion,
-				preferencias, interesesUsuario);
+		System.out.println("\nPor ultimo, de la siguiente lista escoja los intereses que le parezcan. Min 1");
+		System.out.println(Usuario.mostrartInteresesDisponibles());
 
-		System.out.println(usuarioNuevo);
+		UsuarioParametros = agregarInteresesUsuario(UsuarioParametros);
+
+		System.out.println(UsuarioParametros);
+		return UsuarioParametros;
 	}
 
-	private static ArrayList<String> mostrarInteresesDisponibles() {
-		// TODO La lista de intereses es provisional. Habra que retocarla de cara al
-		// final
-
-		String interesUnico = null; // String que usaremos para almacenar la opcion del usuario
-		ArrayList<String> interesesUsuario = new ArrayList<>(); // Lista dinamica con la que podremos darle elasticidad
-																// a las opciones
-		// y al perfil por si quisiera modificar algo
-		String bloqueTexto;
+	static Usuario agregarInteresesUsuario(Usuario usuarioParametros) {
 		boolean bandera = true;
-
-		// Declaramos una lista dinamica para poder a�adir o quitar posteriormente
-
-		String[][] listaIntereses = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo" },
-				{ "M�sica:", "Rock", "Pop", "Electr�nica" }, { "Arte y cultura:", "Pintura" },
-				{ "Mascotas:", "Perros", "Gatos" }, { "Comida:", "Italiana", "Japonesa", "Mexicana" },
-				{ "Bienestar y salud:", "Yoga", "Realfooder" }, { "Tecnolog�a:", "Informatica", "Hardware" },
-				{ "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
-				{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" },
-
-		};
-
-		// Imprimir filas de datos
-		for (int i = 0; i < listaIntereses.length; i++) {
-			System.out.printf("%-3d", i + 1);
-			for (int j = 0; j < listaIntereses[i].length; j++) {
-				System.out.printf("%-20s", listaIntereses[i][j]);
-			}
-			System.out.println();
-		}
-
-		bloqueTexto = """
-
-				Debe seleccionar un minimo de 3 intereses.
-				Escriba sus prefrencias despues de la lista.
-				Cuando finalice o desee acabar, teclee fin.
-
-				""";
-		System.out.print(bloqueTexto);
-
+		String interes;
 		while (bandera) {
 
-			interesUnico = inputString.next();
-
-			if (interesUnico.equalsIgnoreCase("fin"))
+			interes = Util.pedirString();
+			if (interes.equalsIgnoreCase("fin"))
 				bandera = false;
 
-			else
-				interesesUsuario = agregarInteresesUsuario(listaIntereses, interesUnico, interesesUsuario);
-
+			usuarioParametros.agregarListaIntereses(interes);
 		}
-		return interesesUsuario;
+		return usuarioParametros;
 
 	}
 
-	/**
-	 * @author Manuel
-	 * 
-	 *         Metodo por el cual agregamos el interes escogido por el usuario,
-	 *         proveniente de un array bidimensional que contiene los permitidos, a
-	 *         un ArrayList. Se ha controlado que no se puedan introducir las
-	 *         categorias generales colocando el indice fuera de la variable j
-	 *         (siempre empieza en 1)
-	 * 
-	 * 
-	 * @param interesesPermitidos arrayBidimensinoal que contiene los intereses que
-	 *                            se pueden escoger
-	 * @param interesEscogido     String que contiene la seleccion del usuario
-	 * @param interesesUsuario    arraylist que va generandose hasta que el usuario
-	 *                            decide acabar
-	 * @return Devuelve el arrayList con los intereses introducidos
-	 */
-	private static ArrayList<String> agregarInteresesUsuario(String[][] interesesPermitidos, String interesEscogido,
-			ArrayList<String> interesesUsuario) {
+	public static String delimitadorOpcionesCreacionUsuario(int numeroSwitch) {
+// con este metodo auxiliar vamos a controlar las entradas de datos que necesitan de algo mas de verificacion
+		// las que no puedo controlar con el Util.pedirString vaya
+		String datoVerificado = "";
+		boolean bandera = true;
 
-		// TODO poner algun tipo de mensaje para comentarle al usuario si se ha a�adido
-		// o no algo a su lista
+		switch (numeroSwitch) {
 
-		for (int i = 0; i < interesesPermitidos.length; i++) {
-			for (int j = 1; j < interesesPermitidos[i].length; j++) { // Controlamos que no se pueda introducir el
-																		// INDICE
+		case 1:
 
-				if (interesesPermitidos[i][j].equalsIgnoreCase(interesEscogido)
-						&& !interesesUsuario.contains(interesEscogido)) // Ignore case para que no haya problemas
-					interesesUsuario.add(interesEscogido);
+			while (bandera) {
+				datoVerificado = inputString.next();
+				if (!(datoVerificado.equalsIgnoreCase("hetero") || datoVerificado.equalsIgnoreCase("Homo")
+						|| datoVerificado.equalsIgnoreCase("bi")))
+					System.out.println("Revise su eleccion");
+				else
+					bandera = false;
 			}
+
+			break;
+
+		case 2:
+
+			while (bandera) {
+				datoVerificado = inputString.next();
+				if (!(datoVerificado.equalsIgnoreCase("Hombre") || datoVerificado.equalsIgnoreCase("Mujer")))
+					System.out.println("Revise su eleccion");
+				else
+					bandera = false;
+			}
+			break;
+
 		}
 
-		return interesesUsuario;
+		return datoVerificado;
+
 	}
+
 }

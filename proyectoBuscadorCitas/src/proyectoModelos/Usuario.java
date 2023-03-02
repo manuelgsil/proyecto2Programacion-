@@ -9,81 +9,106 @@ public class Usuario {
 
 	private static int numeroUsuarios;
 
-	protected String nombre;
-	protected String apellido;
-	protected LocalDate fechaNacimiento;
-	protected String ciudad;
-	protected String idioma;
-	protected int edad;
-	protected String sexo;
-	protected String contrasenia;
-	protected String descripcion;
-	protected String preferencias;
-	protected ArrayList<String> intereses = new ArrayList();
+	private static final String[][] LISTA_INTERESES = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo" },
+			{ "Música:", "Rock", "Pop", "Electrónica" }, { "Arte y cultura:", "Pintura" },
+			{ "Mascotas:", "Perros", "Gatos" }, { "Comida:", "Italiana", "Japonesa", "Mexicana" },
+			{ "Bienestar y salud:", "Yoga", "Realfooder" }, { "Tecnología:", "Informatica", "Hardware" },
+			{ "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
+			{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" } };
 
-	public Usuario() {
-		super();
+	public final String HETERO = "Heterosexual";
+	public final String GAY = "Gay";
+	public final String BI = "Bisexual";
 
-		nombre = "UsuarioPrueba";
-		apellido = "ProbarApellido";
-		fechaNacimiento = LocalDate.of(1993, 03, 14);
-		ciudad = "Sevilla";
-		idioma = "Español";
-		edad = 29;
-		contrasenia = "123Ma!";
-		descripcion = "en una palabra: betico";
-		preferencias = "indiferente";
-		this.intereses.add("rpg");
-		this.intereses.add("plataformas");
-		this.intereses.add("informatica");
-		Usuario.numeroUsuarios++;
-	}
+	private String nombre;
+	private String apellido;
+	private LocalDate fechaNacimiento;
+	private String ciudad;
+	private String idioma;
+	private int edad;
+	private char sexo;
+	private String descripcion;
+	private String orientacionSexual;
+	private ArrayList<String> intereses = new ArrayList();
 
-	public Usuario(String nombre, String apellido, LocalDate fechaNacimiento, String ciudadNacimiento, String idioma,
-			String contrasenia, String descripcion, String preferencias, ArrayList<String> intereses) {
-		super();
+	public Usuario(String nombre, String apellido, LocalDate fechaNacimiento, String ciudad, String idioma, char sexo,
+			String descripcion, String orientacionSexual) {
+
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.fechaNacimiento = fechaNacimiento;
-		this.ciudad = ciudadNacimiento;
+		this.ciudad = ciudad;
 		this.idioma = idioma;
 		this.edad = calcularEdad(fechaNacimiento);
-		this.contrasenia = contrasenia;
 		this.descripcion = descripcion;
-		this.preferencias = preferencias;
-		this.intereses = intereses;
+		this.orientacionSexual = determinarPreferenciaSexual(orientacionSexual);
+		this.sexo = sexo;
 	}
 
 	public static int getNumeroUsuarios() {
 		return numeroUsuarios;
 	}
 
-	public String getContrasenia() {
-		return contrasenia;
+	/**
+	 * @author Manuel Con esta funcion devolvemos un String que muestra los
+	 *         intereses definidos como constante
+	 * 
+	 */
+	public static String mostrartInteresesDisponibles() {
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < LISTA_INTERESES.length; i++) {
+			sb.append(String.format("%-3d", i + 1));
+			for (int j = 0; j < LISTA_INTERESES[i].length; j++) {
+				sb.append(String.format("%-20s", LISTA_INTERESES[i][j]));
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * @author Manuel Metodo de clase por el cual se introduce el interes
+	 *         seleccionado por el usuario. Esta controlado para que no se repitan
+	 *         los intereses en la misma lista y para que no se pueda elegir el
+	 *         indice de cada categoria
+	 * 
+	 * @param interes Seleccionado por el usuario
+	 */
+	public void agregarListaIntereses(String interes) {
+
+		for (int i = 0; i < LISTA_INTERESES.length; i++) {
+			for (int j = 1; j < LISTA_INTERESES[i].length; j++) { // con j=1 salimos del rango de los indices
+
+				if (LISTA_INTERESES[i][j].equalsIgnoreCase(interes) && !intereses.contains(interes)) // esta doble
+																										// clausula nos
+																										// permite
+																										// controlar los
+																										// repetidos y
+																										// las mayus
+					intereses.add(interes);
+			}
+		}
 	}
 
 	public String getDescripcion() {
 		return descripcion;
 	}
 
-	public String getPreferencias() {
-		return preferencias;
+	public String getOrientacionSexual() {
+		return orientacionSexual;
 	}
 
 	public static void setNumeroUsuarios(int numeroUsuarios) {
 		Usuario.numeroUsuarios = numeroUsuarios;
 	}
 
-	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
-	}
-
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-	public void setPreferencias(String preferencias) {
-		this.preferencias = preferencias;
+	public void setOrientacionSexual(String orientacionSexual) {
+		this.orientacionSexual = orientacionSexual;
 	}
 
 	public String getciudad() {
@@ -149,6 +174,13 @@ public class Usuario {
 		return Period.between(fechaNacimiento, fechaActual).getYears();
 
 	}
+ // esto no tiene mucho sentido, tenog que darle una vuelta
+	public String determinarPreferenciaSexual(String orientacionSexual) {
+		if (orientacionSexual.equalsIgnoreCase("Hetero") || orientacionSexual.equalsIgnoreCase("Gay")
+				|| orientacionSexual.equalsIgnoreCase("Bi"));
+			
+		return orientacionSexual;
+	}
 
 	public String calcularCompatiblidad(Usuario Usuario_a_comparar) {
 
@@ -170,7 +202,7 @@ public class Usuario {
 		num_interesesComunes = interesesComunes.size() * 10;
 		compatiblidad = +num_interesesComunes;
 
-		if (this.preferencias.equals(Usuario_a_comparar.preferencias))
+		if (this.orientacionSexual.equals(Usuario_a_comparar.orientacionSexual))
 			compatiblidad = +20;
 
 		// TODO He planteado esto como un String para ahorrame trabajo posteriormente.
@@ -187,31 +219,8 @@ public class Usuario {
 
 	}
 
-	public ArrayList<Usuario> filtroBusqueda1(Usuario usuario_a_buscar, int opcionBusqueda) {
-		ArrayList<Usuario> usuariosAfines = new ArrayList<Usuario>();
+	public void filtroInteresesOpuestos(Usuario usuario_a_comparar) {
 
-		switch (opcionBusqueda) {
-		case 1:
-			if (this.ciudad.equalsIgnoreCase(usuario_a_buscar.getciudad())) // Usuarios con la misma ciudad
-				usuariosAfines.add(usuario_a_buscar);
-			break;
-		case 2:
-			if(this.idioma.equalsIgnoreCase(usuario_a_buscar.idioma)) // Usuarios con el mismo idioma
-				usuariosAfines.add(usuario_a_buscar);
-			break;
-		case 3:														// encontrar por rango de edad
-			
-
-			break;
-		case 4:														//numero de intereses afines
-
-			break;
-
-		default:
-			break;
-		}
-
-		return usuariosAfines;
 	}
 
 	@Override
@@ -227,7 +236,7 @@ public class Usuario {
 		output += "+------------------+---------------------+\n";
 		output += String.format("| %-16s | %-19s |%n", "Idioma", idioma);
 		output += "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Preferencias", preferencias);
+		output += String.format("| %-16s | %-19s |%n", "Preferencias", orientacionSexual);
 		output += "+------------------+---------------------+\n";
 		output += String.format("| %-16s | %-19s |%n", "Intereses", intereses);
 		output += "+------------------+---------------------+\n";

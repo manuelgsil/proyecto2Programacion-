@@ -9,8 +9,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Random;
 import java.util.Scanner;
 
-
-
 public class Util {
 	private static Scanner inputInt = new Scanner(System.in);
 
@@ -92,7 +90,7 @@ public class Util {
 	public static LocalDate solicitarFecha() {
 		System.out.println("Ingrese la fecha en formato yyyy-MM-dd: ");
 		Scanner sc = new Scanner(System.in);
-		  String fecha = sc.nextLine();
+		String fecha = sc.nextLine();
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -105,6 +103,28 @@ public class Util {
 		}
 
 	}
-	
 
+	/**
+	 * @author Manuel
+	 * @return devuelve un string solo de textos (no admite numeros en el string ni
+	 *         tampoco admitira si este solo tuviera eespacios en blanco)
+	 */
+	public static String pedirString() {
+		String texto = "";
+		boolean bandera = true;
+		while (bandera) {
+			try {
+				texto = inputString.nextLine();
+				if (texto.matches("^\\s*$") || !texto.matches("^[a-zA-Z\\s]+$")) {
+					System.out.println("Compruebe que haya introducido informacion o que no contenga numeros");
+				} else {
+					bandera = false;
+				}
+			} catch (Exception e) {
+				System.out.println("Se ha producido la siguiente excepcion en el codigo: " + e.getMessage());
+			}
+
+		}
+		return texto;
+	}
 }
