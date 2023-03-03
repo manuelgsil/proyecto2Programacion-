@@ -13,8 +13,21 @@ public class menuPredeterminado {
 	private static Scanner inputString = new Scanner(System.in);
 
 	public static void main(String[] args) {
+		ArrayList<Usuario> usuarios = new ArrayList<>();
+		usuarios.add(new Usuario("Pepe", "Flores", LocalDate.of(1999, 1, 18), "Sevilla", "Espanol",'H' , "Malo malote", "Hetero"));
+		usuarios.add(new Usuario("Pepe", "Flores", LocalDate.of(1998, 5, 18), "Sevilla", "Espanol",'M' , "Perro Viejo", "Hetero"));
+	
+		
+		usuarios.get(0).agregarListaIntereses("Futbol");
+		usuarios.get(0).agregarListaIntereses("yoga");
+		usuarios.get(1).agregarListaIntereses("pop");
+		usuarios.get(1).agregarListaIntereses("Futbol");
 
-		crearUsuario();
+		
+		
+		//usuarios.get(0).mostrarPersonasConInteresesEnComun(usuarios.get(1), usuarios);
+		System.out.println(usuarios.get(0).calcularCompatiblidad(usuarios.get(1)));
+		
 
 		// ArrayList<Usuario> usuarios = new ArrayList<>();
 
@@ -66,8 +79,8 @@ public class menuPredeterminado {
 		switch (numeroPantallazo) {
 		case 1:
 			bloqueTexto = """
-					¿Qué desea hacer?
-					 1. - Añadir una nueva persona
+					ï¿½Quï¿½ desea hacer?
+					 1. - Aï¿½adir una nueva persona
 					 2. - Buscar emparejamientos
 					 3. - Salir del programa
 					 """;
@@ -76,11 +89,11 @@ public class menuPredeterminado {
 			break;
 		case 2:
 			bloqueTexto = """
-					¿Como desea buscar?
+					ï¿½Como desea buscar?
 					1. - Filtrando
-					2. - Personas con más datos en común
+					2. - Personas con mï¿½s datos en comï¿½n
 					3. - Personas con aficiones opuestas
-					4.- Búsqueda aleatoria
+					4.- Bï¿½squeda aleatoria
 										""";
 			System.out.println(bloqueTexto);
 			break;
@@ -161,7 +174,7 @@ public class menuPredeterminado {
 		idioma = Util.pedirString(); // tambien controlado
 		System.out.print("Introduzca una descripcion (max 250c)");
 		descripcion = Util.pedirString(); // AQUI HABRIA QUE CONTROLAR EL LIMITE DE CARACTERES SI QUEREMOS DARLE UN TOQUE GRACIOSO
-		System.out.println("indique su sexo (H/M)");
+		System.out.println("indique su sexo (Hombre/Mujer)");
 		sexo = delimitadorOpcionesCreacionUsuario(2); // Este es el parametro para el sexo 
 
 		System.out.println("Escoja sus preferencias : HETERO | GAY | BI ");
@@ -252,5 +265,82 @@ public class menuPredeterminado {
 		return datoVerificado;
 
 	}
+	/**
+	 * @author DANI_
+	 * Metodo por el cual se muestra al usuario por pantalla el resultado de filtrar una ciudad.
+	 * @param personasPorCiudad
+	 * @return
+	 */
+	public static List<Usuario> mostrarFiltroCiudad( List<Usuario>personasPorCiudad ){
+		   for (Usuario u : personasPorCiudad) {
+	            System.out.println(u.getNombre());
+	        }
+		return personasPorCiudad;
+	   
+}
+	/**
+	 * @author DANI_
+	 * Metodo por el cual se muestra al usuario por pantalla el resultado de filtrar por edad.
+	 * @param personasPorCiudad
+	 * @return
+	 */
+	public static List <Usuario> mostrarFiltroEdad(List<Usuario> personasEnRangoDeEdad) {
+		  for (Usuario persona : personasEnRangoDeEdad) {
+	            System.out.println(persona.getNombre());
+	        }
+		return personasEnRangoDeEdad;
+		
+	}
+
+	public static List <Usuario> mostrarFiltroIdioma(List<Usuario> personasIdioma) {
+		  for (Usuario persona :  personasIdioma) {
+	            System.out.println(persona.getNombre());
+	        }
+		return personasIdioma;
+		
+	}
+	/**
+	 * @author DANI_
+	 * Metodo por el cual mostramos al usuario un filtro de edad, donde se le preguta al usuario
+	 * un minimo un maximo de aÃ±os y luego se guarda  el resultado en un ArrayList y despues se llama
+	 * a otro metodo por el cual se muestra por pantalla.
+	 * @param usuarios
+	 */
+	public static void preguntaFiltroEdad(List<Usuario> usuarios) {
+		
+		int minimo,maximo;
+		Scanner sc= new Scanner (System.in);
+		System.out.println("Dime la Edad Minima que quieres filtrar");
+		minimo=sc.nextInt();
+		System.out.println("Dime la Edad Maxima que quieres filtrar");
+		maximo=sc.nextInt();
+		
+		List<Usuario> personasPorEdad=Usuario.filtrarPorEdad(usuarios, minimo, maximo);
+		mostrarFiltroEdad(personasPorEdad);
+		
+	
+	}
+	/**
+	 * @author DANI_
+	 * Metodo por el cual mostramos al usuario un filtro de Ciudad, donde se le preguta al usuario
+	 * la ciudad que desea filtrar y luego se guarda  el resultado en un ArrayList y despues se llama
+	 * a otro metodo por el cual se muestra por pantalla.
+	 * @param usuarios
+	 */
+
+	public  static void preguntaFiltrosCiudad( List<Usuario> usuarios) {
+		Scanner sc= new Scanner(System.in);
+		String entradaDatos;
+		System.out.println("Dime la Ciudad que quieres Filtrar");
+	
+		entradaDatos=sc.nextLine();
+		
+		 List<Usuario> personasPorCiudad = Usuario.filtrarPorCiudad(usuarios, entradaDatos);
+		 mostrarFiltroCiudad(personasPorCiudad);
+		
+		
+		
+	}
+	
 
 }

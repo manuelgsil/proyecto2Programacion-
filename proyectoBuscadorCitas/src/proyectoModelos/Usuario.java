@@ -4,15 +4,16 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Usuario {
 
 	private static int numeroUsuarios;
 
 	private static final String[][] LISTA_INTERESES = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo" },
-			{ "Música:", "Rock", "Pop", "Electrónica" }, { "Arte y cultura:", "Pintura" },
+			{ "Mï¿½sica:", "Rock", "Pop", "Electrï¿½nica" }, { "Arte y cultura:", "Pintura" },
 			{ "Mascotas:", "Perros", "Gatos" }, { "Comida:", "Italiana", "Japonesa", "Mexicana" },
-			{ "Bienestar y salud:", "Yoga", "Realfooder" }, { "Tecnología:", "Informatica", "Hardware" },
+			{ "Bienestar y salud:", "Yoga", "Realfooder" }, { "Tecnologï¿½a:", "Informatica", "Hardware" },
 			{ "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
 			{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" } };
 
@@ -189,7 +190,7 @@ public class Usuario {
 		String mensaje = null;
 		int compatiblidad = 0;
 		int diferenciaEdad = Math.abs(this.edad - Usuario_a_comparar.edad);
-		int num_interesesComunes; // Al tamaño del array de cosas comunes que tengan lo voy a multiplicar por 10
+		int num_interesesComunes; // Al tamanioo del array de cosas comunes que tengan lo voy a multiplicar por 10
 
 		List<String> interesesComunes = new ArrayList<String>(this.intereses);
 		interesesComunes.retainAll(Usuario_a_comparar.getIntereses());
@@ -214,11 +215,22 @@ public class Usuario {
 		} else {
 			mensaje = "Tu compatiblidad con este usuario es la siguiente: " + compatiblidad;
 		}
+		
 
 		return mensaje;
 
 	}
 
+	public  List<String> FiltroInteresesComunes(Usuario usuario_a_comparar,List<Usuario> usuarios) {
+	  
+		 List<String> interesesComunes = new ArrayList<String>(usuario_a_comparar.getIntereses());
+		    
+		    for (Usuario usuario : usuarios) {
+		        interesesComunes.retainAll(usuario.getIntereses());
+		    }
+		    
+		    return interesesComunes;
+	}
 	public void filtroInteresesOpuestos(Usuario usuario_a_comparar) {
 
 	}
@@ -240,7 +252,7 @@ public class Usuario {
 		output += "+------------------+---------------------+\n";
 		output += String.format("| %-16s | %-19s |%n", "Intereses", intereses);
 		output += "+------------------+---------------------+\n";
-		output += "\nDescripción:\n";
+		output += "\nDescripciï¿½n:\n";
 		output += "+----------------------------------------+\n";
 		output += String.format("| %-38s |%n", descripcion);
 		output += "+----------------------------------------+\n";
@@ -248,5 +260,44 @@ public class Usuario {
 		return output;
 
 	}
+	public void mostrarPersonasConInteresesEnComun(Usuario usuario, List<Usuario> usuarios) {
+	    List<String> interesesComunes = FiltroInteresesComunes(usuario, usuarios);
+	    System.out.println("Intereses en comÃºn: " + interesesComunes);
+	    for (Usuario u : usuarios) {
+	        if (!u.equals(usuario) && u.getIntereses().containsAll(interesesComunes)) {
+	            System.out.println(u.toString());
+	        }
+	    }
+	}
+	public static List<Usuario> filtrarPorCiudad( List<Usuario> ciudades,String ciudad) {
+        List<Usuario> filtradas = new ArrayList<>();
+        for (Usuario c : ciudades) {
+            if (c.getciudad().equalsIgnoreCase(ciudad)) {
+                filtradas.add(c);
+            }
+        }
+        return filtradas;
+    }
+    public static List<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
+        return edad.stream()
+                .filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
+                .collect(Collectors.toList());
+    }
+
+    public static List<Usuario> filtrarPorIdioma(List<Usuario> idioma,String lengua){
+    	
+    	List<Usuario> filtrado=new ArrayList<>();
+    	
+    	for (Usuario c: idioma) {
+    		if (c.getIdioma().equalsIgnoreCase(lengua)){
+    			filtrado.add(c);
+    			
+    		}
+    	}
+    	
+		return filtrado;
+    	
+    }
+ 
 
 }
