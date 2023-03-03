@@ -19,14 +19,14 @@ public class menuPredeterminado {
 	
 		
 		usuarios.get(0).agregarListaIntereses("Futbol");
-		usuarios.get(0).agregarListaIntereses("yoga");
+		usuarios.get(0).agregarListaIntereses("pop");
 		usuarios.get(1).agregarListaIntereses("pop");
 		usuarios.get(1).agregarListaIntereses("Futbol");
 
+		System.out.println(usuarios.get(0).mostrarPersonasConInteresesEnComun(usuarios.get(1), usuarios));
 		
-		
-		//usuarios.get(0).mostrarPersonasConInteresesEnComun(usuarios.get(1), usuarios);
-		System.out.println(usuarios.get(0).calcularCompatiblidad(usuarios.get(1)));
+	
+	
 		
 
 		// ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -291,6 +291,12 @@ public class menuPredeterminado {
 		return personasEnRangoDeEdad;
 		
 	}
+	/**
+	 * @author DANI_
+	 * Metodo por el cual se muestra al usuario por pantalla el resultado de filtrar por idioma.
+	 * @param personasPorCiudad
+	 * @return
+	 */
 
 	public static List <Usuario> mostrarFiltroIdioma(List<Usuario> personasIdioma) {
 		  for (Usuario persona :  personasIdioma) {

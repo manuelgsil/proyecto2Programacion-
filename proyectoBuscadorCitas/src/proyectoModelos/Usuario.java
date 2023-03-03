@@ -82,11 +82,11 @@ public class Usuario {
 			for (int j = 1; j < LISTA_INTERESES[i].length; j++) { // con j=1 salimos del rango de los indices
 
 				if (LISTA_INTERESES[i][j].equalsIgnoreCase(interes) && !intereses.contains(interes)) // esta doble
-																										// clausula nos
-																										// permite
-																										// controlar los
-																										// repetidos y
-																										// las mayus
+					// clausula nos
+					// permite
+					// controlar los
+					// repetidos y
+					// las mayus
 					intereses.add(interes);
 			}
 		}
@@ -175,11 +175,11 @@ public class Usuario {
 		return Period.between(fechaNacimiento, fechaActual).getYears();
 
 	}
- // esto no tiene mucho sentido, tenog que darle una vuelta
+	// esto no tiene mucho sentido, tenog que darle una vuelta
 	public String determinarPreferenciaSexual(String orientacionSexual) {
 		if (orientacionSexual.equalsIgnoreCase("Hetero") || orientacionSexual.equalsIgnoreCase("Gay")
 				|| orientacionSexual.equalsIgnoreCase("Bi"));
-			
+
 		return orientacionSexual;
 	}
 
@@ -215,21 +215,29 @@ public class Usuario {
 		} else {
 			mensaje = "Tu compatiblidad con este usuario es la siguiente: " + compatiblidad;
 		}
-		
+
 
 		return mensaje;
 
 	}
-
+	/**
+	 * @author DANI_
+	 * Metodo por el cual le damos como entrada un Objeto de la clase Usuario y un ArrayList
+	 * y buscamos a traves de un bucle for-each las personas que tienen intereses comunes y lo delvolvemos
+	 * en otro ArrayList con los usuarios que tienen en comun dichos intereses.
+	 * @param usuario_a_comparar
+	 * @param usuarios
+	 * @return
+	 */
 	public  List<String> FiltroInteresesComunes(Usuario usuario_a_comparar,List<Usuario> usuarios) {
-	  
-		 List<String> interesesComunes = new ArrayList<String>(usuario_a_comparar.getIntereses());
-		    
-		    for (Usuario usuario : usuarios) {
-		        interesesComunes.retainAll(usuario.getIntereses());
-		    }
-		    
-		    return interesesComunes;
+
+		List<String> interesesComunes = new ArrayList<String>(usuario_a_comparar.getIntereses());
+
+		for (Usuario usuario : usuarios) {
+			interesesComunes.retainAll(usuario.getIntereses());
+		}
+
+		return interesesComunes;
 	}
 	public void filtroInteresesOpuestos(Usuario usuario_a_comparar) {
 
@@ -260,44 +268,80 @@ public class Usuario {
 		return output;
 
 	}
-	public void mostrarPersonasConInteresesEnComun(Usuario usuario, List<Usuario> usuarios) {
-	    List<String> interesesComunes = FiltroInteresesComunes(usuario, usuarios);
-	    System.out.println("Intereses en común: " + interesesComunes);
-	    for (Usuario u : usuarios) {
-	        if (!u.equals(usuario) && u.getIntereses().containsAll(interesesComunes)) {
-	            System.out.println(u.toString());
-	        }
-	    }
+	/**
+	 * @author DANI_
+	 *Metodo por el cual cogemos y guardamos dentro de un ArrayList de String el metodo 
+	 *{@linkFiltroInteresComunes}, y mostramos a través de un String tanto los intereses que tienen´
+	 *en comun como el "Perfil" de  dicha/s personas, que tienen en comun esos intereses.
+	 * @param usuario
+	 * @param usuarios
+	 * @return 
+	 */
+	public String mostrarPersonasConInteresesEnComun(Usuario usuario, List<Usuario> usuarios) {
+		String devolver="";
+		List<String> interesesComunes = FiltroInteresesComunes(usuario, usuarios);
+		
+		for (Usuario u : usuarios) {
+			if (!u.equals(usuario) && u.getIntereses().containsAll(interesesComunes)) {
+			devolver= "Intereses en común: " + interesesComunes+ "\n"+ u.toString();
+			}
+		}
+		return devolver;
 	}
+	/**
+	 * @author DANI_
+	 * Metodo por el cual filtramos la ciudad que queramos de cada usuario guardandolos en un
+	 * ArrayList con dichos Usuarios que vivan en dicha ciudad.
+	 * @param ciudades
+	 * @param ciudad
+	 * @return
+	 */
 	public static List<Usuario> filtrarPorCiudad( List<Usuario> ciudades,String ciudad) {
-        List<Usuario> filtradas = new ArrayList<>();
-        for (Usuario c : ciudades) {
-            if (c.getciudad().equalsIgnoreCase(ciudad)) {
-                filtradas.add(c);
-            }
-        }
-        return filtradas;
-    }
-    public static List<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
-        return edad.stream()
-                .filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
-                .collect(Collectors.toList());
-    }
+		List<Usuario> filtradas = new ArrayList<>();
+		for (Usuario c : ciudades) {
+			if (c.getciudad().equalsIgnoreCase(ciudad)) {
+				filtradas.add(c);
+			}
+		}
+		return filtradas;
+	}
+	/**
+	 * @author DANI_
+	 *Metodo por el cual filtramos la edad de un ArrayList de Usuarios entre dos intervalos (Edad
+	 *minima y Edad maxima que queramos filtrar.
+	 * @param edad
+	 * @param edadMinima
+	 * @param edadMaxima
+	 * @return
+	 */
+	public static List<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
+		return edad.stream()
+				.filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
+				.collect(Collectors.toList());
+	}
+	/**
+	 * @author DANI_
+	 * Metodo el cual filtra el idioma que queramos. Mediante un bucle for-each vamos recorriendo y 
+	 * lo vamos comparando con los idiomas de los usuarios, finalmente no añade al ArrayList los usuarios
+	 * que tengan en comun dicho idioma.
+	 * @param idioma de tipo ArrayList
+	 * @param lengua String con el idioma que queremos filtrar.
+	 * @return
+	 */
+	public static List<Usuario> filtrarPorIdioma(List<Usuario> idioma,String lengua){
 
-    public static List<Usuario> filtrarPorIdioma(List<Usuario> idioma,String lengua){
-    	
-    	List<Usuario> filtrado=new ArrayList<>();
-    	
-    	for (Usuario c: idioma) {
-    		if (c.getIdioma().equalsIgnoreCase(lengua)){
-    			filtrado.add(c);
-    			
-    		}
-    	}
-    	
+		List<Usuario> filtrado=new ArrayList<>();
+
+		for (Usuario c: idioma) {
+			if (c.getIdioma().equalsIgnoreCase(lengua)){
+				filtrado.add(c);
+
+			}
+		}
+
 		return filtrado;
-    	
-    }
- 
+
+	}
+
 
 }
