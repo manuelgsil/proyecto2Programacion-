@@ -11,12 +11,17 @@ public class Usuario {
 	private static int numeroUsuarios;
 
 	private static final String[][] LISTA_INTERESES = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo" },
-			{ "M�sica:", "Rock", "Pop", "Electr�nica" }, { "Arte y cultura:", "Pintura" },
-			{ "Mascotas:", "Perros", "Gatos" }, { "Comida:", "Italiana", "Japonesa", "Mexicana" },
-			{ "Bienestar y salud:", "Yoga", "Realfooder" }, { "Tecnologia:", "Informatica", "Hardware" },
-			{ "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
+			{ "Musica:", "Rock", "Pop", "Electronica" },
+			{ "Arte y cultura:", "Pintura", "Literatura", "Filosofia", "Museos" }, { "Mascotas:", "Perros", "Gatos" },
+			{ "Comida:", "Italiana", "Japonesa", "Mexicana" }, { "Bienestar y salud:", "Yoga", "Realfooder" },
+			{ "Tecnologia:", "Informatica", "Hardware" }, { "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
 			{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" } };
 
+	// { "Arte y cultura:", "Pintura","Literatura","Filosofia","Museos" },
+	// { "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" }
+	// { "Musica:", "Rock", "Pop", "Electr�nica" }, { "Arte y cultura:", "Pintura"
+	// }
+	//
 	private String nombre;
 	private String apellido;
 	private LocalDate fechaNacimiento;
@@ -167,7 +172,7 @@ public class Usuario {
 			if (compatiblidad > 100)
 				compatiblidad = 100;
 
-			mensaje = "Tu indice de compatibilidad con " + usuario_a_comparar.getNombre() + " es del : " + compatiblidad
+			mensaje = this.nombre+" Tu indice de compatibilidad con " + usuario_a_comparar.getNombre() + " es del : " + compatiblidad
 					+ "%";
 		}
 		return mensaje;
@@ -194,7 +199,8 @@ public class Usuario {
 		final String GAY = "GAY";
 		final String BI = "BI";
 		switch (this.orientacionSexual) { // En el switch ponemos como key la preferencia sexual del usuario
-											// desde aqui realizamos una serie de condicionales segun su orientacion Sexual
+											// desde aqui realizamos una serie de condicionales segun su orientacion
+											// Sexual
 		case HETERO:
 
 			if (this.sexo != usuario_a_comparar.getSexo() && usuario_a_comparar.getOrientacionSexual().equals(HETERO)
@@ -334,8 +340,7 @@ public class Usuario {
 		List<String> interesesComunes = FiltroInteresesComunes(usuario, usuarios);
 
 		for (Usuario u : usuarios) {
-			if (!u.equals(usuario) && u.getIntereses().containsAll(interesesComunes)) { // Creo que esto es Contains a
-																						// secas, No all.
+			if (!u.equals(usuario) && u.getIntereses().containsAll(interesesComunes)) {
 				devolver = "Intereses en comun: " + interesesComunes + "\n" + u.toString();
 			}
 		}
@@ -418,7 +423,24 @@ public class Usuario {
 
 	}
 
-	public void filtroInteresesOpuestos(Usuario usuario_a_comparar) {
+	public ArrayList <Usuario>filtroInteresesOpuestos(Usuario usuario_a_comparar, ArrayList<Usuario> arrayUsuarios) {
+		/*
+		 * Como la eleccion de intereses "opuestos" entre si es una cuestion bastante
+		 * subjetiva, que implicaria que la definicion de algun interes es excluyente de
+		 * otra (comida sana vs comida basura), y que se puede alejar bastante de la
+		 * precision pretendida en este proyecto, vamos a devolver usuarios que no
+		 * tengan ningun intereses similar.
+		 */ 
+		
+		// TODO Esto esta mal. Tengo que probarlo
+
+		ArrayList<Usuario> genteSinInteresesComunes = new ArrayList<Usuario>();
+
+		for (Usuario usuario : arrayUsuarios) {
+			if (!this.intereses.containsAll(usuario_a_comparar.getIntereses()))
+				genteSinInteresesComunes.add(usuario_a_comparar);
+		}
+		return genteSinInteresesComunes;
 
 	}
 

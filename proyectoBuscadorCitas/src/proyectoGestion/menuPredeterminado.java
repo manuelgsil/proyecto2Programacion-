@@ -13,14 +13,14 @@ public class menuPredeterminado {
 	private static Scanner inputString = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		ArrayList<Usuario> usuarios = new ArrayList<>();
+		ArrayList<Usuario> cargaUsuarios = new ArrayList<Usuario>();
+		cargaUsuarios = cargaUsuarios(cargaUsuarios);
 
-		Usuario prueba1 = new Usuario("Pepe", "Flores", LocalDate.of(1999, 1, 18), "Sevilla", "Espanol", 'H',
-				"Malo malote", "GAY");
-		Usuario prueba2 = new Usuario("Ricardo", "Flores", LocalDate.of(1999, 1, 18), "Sevilla", "Espanol", 'H',
-				"Malo malote", "BI");
+		for (int i = 0; i < cargaUsuarios.size(); i++) {
+			if (!cargaUsuarios.get(0).equals(cargaUsuarios.get(i)))
+				System.out.println(cargaUsuarios.get(0).calcularCompatiblidad(cargaUsuarios.get(i)));
 
-		System.out.println(prueba1.calcularCompatiblidad(prueba2));
+		}
 
 	}
 
@@ -310,4 +310,55 @@ public class menuPredeterminado {
 
 	}
 
+	/**
+	 * @author Manuel Carga de usuarios inical para que el programa tenga con lo que
+	 *         trabajar
+	 * @return arrayList de usuarios
+	 */
+	public static ArrayList<Usuario> cargaUsuarios(ArrayList<Usuario> cargaUsuarios) {
+
+		Usuario carga1 = new Usuario("Pepe", "Flores", LocalDate.of(1999, 1, 18), "Sevilla", "Espanol", 'H',
+				"Malo malote", "GAY");
+		Usuario carga2 = new Usuario("Ricardo", "Flores", LocalDate.of(1999, 6, 18), "Sevilla", "Espanol", 'H',
+				"Malo malote", "BI");
+		Usuario carga3 = new Usuario("Augusto", "Montesierra", LocalDate.of(1984, 2, 18), "Malaga", "Espanol", 'H',
+				"Agustisimo", "HETERO");
+		Usuario carga4 = new Usuario("Clara", "Agua", LocalDate.of(1989, 3, 18), "Sevilla", "Ingles", 'M',
+				"Me encanta lo que me encanta", "BI");
+		Usuario carga5 = new Usuario("Evaristo", "Mismo", LocalDate.of(1995, 5, 18), "Sevilla", "Suajili", 'H',
+				"Started from the bottom", "GAY");
+		Usuario carga6 = new Usuario("Naturaleza", "Hernandez", LocalDate.of(1983, 4, 18), "Sevilla", "Espanol", 'M',
+				"simplemente yop", "GAY");
+		Usuario carga7 = new Usuario("Ignacia", "Misteriosa", LocalDate.of(1999, 3, 18), "Sevilla", "Espanol", 'M',
+				"Dios y yo somos uno", "HETERO");
+		Usuario carga8 = new Usuario("Federica", "Milagrosa", LocalDate.of(1979, 1, 18), "Sevilla", "Espanol", 'M',
+				"Malo minimo", "HETERO");
+		Usuario carga9 = new Usuario("Herminia", "Eureka", LocalDate.of(1996, 1, 18), "Sevilla", "Espanol", 'M',
+				"Malo maximo", "BI");
+		Usuario carga10 = new Usuario("Ricardo", "Gonzalez", LocalDate.of(1999, 7, 18), "Sevilla", "Espanol", 'H',
+				"Malo tolashoras", "GAY");
+		Usuario carga11 = new Usuario("Socrates", "Leon", LocalDate.of(1959, 1, 18), "Sevilla", "Espanol", 'H',
+				"Malo segun pa que", "BI");
+		Usuario carga12 = new Usuario("Michael", "Jackson", LocalDate.of(1975, 3, 18), "Sevilla", "Ingles", 'H',
+				"Malo malote", "HETERO");
+		Usuario carga13 = new Usuario("Eustaquia", "Obradora", LocalDate.of(1985, 1, 18), "Sevilla", "Espanol", 'M',
+				"Malo del todo", "GAY");
+
+		cargaUsuarios.add(carga1);
+		cargaUsuarios.add(carga2);
+		cargaUsuarios.add(carga3);
+		cargaUsuarios.add(carga4);
+		cargaUsuarios.add(carga5);
+		cargaUsuarios.add(carga6);
+		cargaUsuarios.add(carga7);
+		cargaUsuarios.add(carga8);
+		cargaUsuarios.add(carga9);
+		cargaUsuarios.add(carga10);
+		cargaUsuarios.add(carga11);
+		cargaUsuarios.add(carga12);
+		cargaUsuarios.add(carga13);
+
+		return cargaUsuarios;
+
+	}
 }
