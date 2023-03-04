@@ -16,40 +16,7 @@ public class menuPredeterminado {
 
 		crearUsuario();
 
-		// ArrayList<Usuario> usuarios = new ArrayList<>();
-
-		/*
-		 * usuarios.add(new Usuario("Juan", "Pérez", LocalDate.of(1990, 5, 15),
-		 * "Sevilla", "Espanol", "contraseña1", "Atento y carinioso", "Hetero", new
-		 * ArrayList<String>() {{ add("Futbol"); add("Cine Clasico"); }}));
-		 * usuarios.add(new Usuario("Maria", "Garcia", LocalDate.of(1995, 8, 23),
-		 * "Almeria", "Espanol", "contraseña2", "Simpatica, amiga de mis amigas",
-		 * "Hetero", new ArrayList<String>() {{ add("Perros"); add("Yoga"); }}));
-		 * usuarios.add(new Usuario("John", "Mamon", LocalDate.of(1985, 3, 8), "Huelva",
-		 * "Espanol", "contraseña3", "Fiestero y Trabajador", "Homo", new
-		 * ArrayList<String>() {{ add("Interés 5"); add("Interés 6"); }}));
-		 * usuarios.add(new Usuario("Julia", "Perez", LocalDate.of(2000, 11, 2),
-		 * "Cordoba", "Espanol", "contraseña4", "Soy una chica amable y sincera", "Bi",
-		 * new ArrayList<String>() {{ add("Pintura"); add("Series TV"); }}));
-		 * usuarios.add(new Usuario("Carlos", "Ramirez", LocalDate.of(1992, 1, 20),
-		 * "Jaen", "Espanol", "contraseña5", "Pasional, maniatico", "Hetero", new
-		 * ArrayList<String>() {{ add("Tenis"); add("Videojuegos"); }}));
-		 * usuarios.add(new Usuario("Ana", "Mena", LocalDate.of(1988, 7, 13), "Malaga",
-		 * "Espanol", "contraseña6", "estudiante", "Hetero", new ArrayList<String>() {{
-		 * add("Informatica"); add("Futbol"); }})); usuarios.add(new Usuario("Miguel",
-		 * "Gutiérrez", LocalDate.of(1998, 4, 29), "Malaga", "Espanol", "contraseña7",
-		 * "atento, amable, risueño", "Bi", new ArrayList<String>() {{ add("Boxeo");
-		 * add("Perros"); }})); usuarios.add(new Usuario("Sofia", "Moreno",
-		 * LocalDate.of(1983, 9, 6), "Huelva", "Espanol", "contraseña8",
-		 * "Descripción 8", "Homo", new ArrayList<String>() {{ add("Hardware");
-		 * add("Pop"); }})); usuarios.add(new Usuario("Jorge", "Gonzalez",
-		 * LocalDate.of(1991, 12, 17), "Sevilla", "Espanol", "contraseña9",
-		 * "Perfeccionista, atento", "Bi", new ArrayList<String>() {{ add("Realfooder");
-		 * add("Baloncesto"); }})); usuarios.add(new Usuario("Tomas", "Demileche",
-		 * LocalDate.of(1991, 12, 17), "Jaen", "Espanol", "contraseña10",
-		 * "Puntual, responsable", "Hetero", new ArrayList<String>() {{ add("Gatos");
-		 * add("Italiano"); }}));
-		 */
+	
 
 	}
 
@@ -132,13 +99,16 @@ public class menuPredeterminado {
 	}
 
 	/**
-	 * @author Manuel Metodo para crear una instancia de Usuario por parametros.
+	 * @author Manuel 
+	 * 
+	 * Metodo para crear una instancia de Usuario por parametros.
 	 *         Tiene anidados varios metodos tantos de esta clase como de la clase
 	 *         Util.
 	 */
 	public static Usuario crearUsuario() {
 // En un principio el constructor por parametros esta terminado. Queda hacerle pruebas a muerte.
 		almacenPantallazos(3);
+		String validacion;
 		String nombre;
 		String apellido;
 		String ciudad;
@@ -147,7 +117,7 @@ public class menuPredeterminado {
 		String orientacionSexual;
 		String sexo;
 		LocalDate fechaNacimiento;
-
+	
 		System.out.print("Introduzca su nombre: ");
 		nombre = Util.pedirString();  // Con el util controlamos que los datos que nos introduzca son validos de por si
 		System.out.print("Ahora su apellido: ");
@@ -176,11 +146,16 @@ public class menuPredeterminado {
 		UsuarioParametros = agregarInteresesUsuario(UsuarioParametros);
 
 		System.out.println(UsuarioParametros);
+		
+		System.out.println("Esta contento con el resultado/n[s/n]?");
+		
+		// Controlar esto con un bucle por si quiere volver a introducir los datos
 		return UsuarioParametros;
 	}
 
 	/**
-	 * @author Manuel Este metodo encapsula la manera de aniadir intereses al
+	 * @author Manuel 
+	 * 		Este metodo encapsula la manera de aniadir intereses al
 	 *         usuario en cuestion
 	 * @param usuarioParametros Se debe introducir el usuario que hayamos creado
 	 *                          para ir agregando intereses al arraylist
@@ -203,7 +178,7 @@ public class menuPredeterminado {
 	}
 
 	/**
-	 * @author Manuel Metodo 
+	 * @author Manuel  
 	 * 
 	 * 			metodo creado para encapsular el numero de condicionales en la
 	 *         funcion {@link #crearUsuario()} mediante un switch. Segun la opcion

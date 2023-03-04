@@ -128,9 +128,6 @@ public class Usuario {
 		return fechaNacimiento;
 	}
 
-	public String getCiudad() {
-		return ciudad;
-	}
 
 	public String getIdioma() {
 		return idioma;
