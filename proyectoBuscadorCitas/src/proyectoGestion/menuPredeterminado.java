@@ -14,13 +14,15 @@ public class menuPredeterminado {
 
 	public static void main(String[] args) {
 		ArrayList<Usuario> cargaUsuarios = new ArrayList<Usuario>();
+		ArrayList <Usuario> resultadoFiltro= new ArrayList<Usuario>();
 		cargaUsuarios = cargaUsuarios(cargaUsuarios);
-
-		for (int i = 0; i < cargaUsuarios.size(); i++) {
-			if (!cargaUsuarios.get(0).equals(cargaUsuarios.get(i)))
-				System.out.println(cargaUsuarios.get(0).calcularCompatiblidad(cargaUsuarios.get(i)));
-
+		Usuario prueba1 = new Usuario ();
+		resultadoFiltro= prueba1.filtroInteresesOpuestos(prueba1, cargaUsuarios);
+		System.out.println(prueba1+"\n usuarioprueba");
+		for (Usuario usuario : resultadoFiltro) {
+			System.out.println(usuario);
 		}
+		
 
 	}
 
@@ -37,8 +39,8 @@ public class menuPredeterminado {
 		switch (numeroPantallazo) {
 		case 1:
 			bloqueTexto = """
-					�Qu� desea hacer?
-					 1. - A�adir una nueva persona
+					 Que desea hacer?
+					 1. - Aniadir una nueva persona
 					 2. - Buscar emparejamientos
 					 3. - Salir del programa
 					 """;
@@ -85,7 +87,7 @@ public class menuPredeterminado {
 			opcionUsuario = inputInt.nextInt();
 			switch (opcionUsuario) {
 			case 1:
-				usuarioPrograma = crearUsuario();
+			usuarioPrograma = crearUsuario();
 
 				break;
 			case 2:

@@ -19,11 +19,6 @@ public class Usuario {
 			{ "Tecnologia:", "Informatica", "Hardware" }, { "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
 			{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" } };
 
-	// { "Arte y cultura:", "Pintura","Literatura","Filosofia","Museos" },
-	// { "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" }
-	// { "Musica:", "Rock", "Pop", "Electrï¿½nica" }, { "Arte y cultura:", "Pintura"
-	// }
-	//
 	private String nombre;
 	private String apellido;
 	private LocalDate fechaNacimiento;
@@ -34,6 +29,19 @@ public class Usuario {
 	private String descripcion;
 	private String orientacionSexual;
 	private ArrayList<String> intereses = new ArrayList();
+
+	public Usuario() {
+		this.nombre = "prueba";
+		apellido = "masprueba";
+		fechaNacimiento = LocalDate.of(1993, 03, 14);
+		ciudad = "Sevilla";
+		edad = calcularEdad(fechaNacimiento);
+		sexo = 'H';
+		descripcion = "jaja jiji";
+		orientacionSexual = "HETERO";
+		generarInteresesAleatorios();
+
+	}
 
 	public Usuario(String nombre, String apellido, LocalDate fechaNacimiento, String ciudad, String idioma, char sexo,
 			String descripcion, String orientacionSexual) {
@@ -157,11 +165,10 @@ public class Usuario {
 		return orientacionSexual;
 	}
 
-	public String calcularCompatiblidad(Usuario usuario_a_comparar) {
+	public int calcularCompatiblidad(Usuario usuario_a_comparar) {
 
-		String mensaje = "";
 		boolean bandera;
-		int compatiblidad;
+		int compatiblidad=0;
 
 		bandera = banderaCompatibilidad(usuario_a_comparar);
 		if (bandera) {
@@ -170,10 +177,9 @@ public class Usuario {
 
 			compatiblidad = compatiblidad > 100 ? 100 : compatiblidad;
 
-			mensaje = this.nombre + " Tu indice de compatibilidad con\n " + usuario_a_comparar.toString()
-					+ "\nes del : " + compatiblidad + "%";
+			
 		}
-		return mensaje;
+		return compatiblidad;
 	}
 
 	/**
@@ -336,9 +342,9 @@ public class Usuario {
 	 * @param usuarios
 	 * @return
 	 */
-	public String mostrarPersonasConInteresesEnComun(Usuario usuario, List<Usuario> usuarios) {
+	public String mostrarPersonasConInteresesEnComun(Usuario usuario, ArrayList<Usuario> usuarios) {
 		String devolver = "";
-		List<String> interesesComunes = FiltroInteresesComunes(usuario, usuarios);
+		ArrayList<Usuario> interesesComunes = FiltroInteresesComunes(usuario, usuarios);
 
 		for (Usuario u : usuarios) {
 			if (!u.equals(usuario) && u.getIntereses().containsAll(interesesComunes)) {
@@ -357,15 +363,20 @@ public class Usuario {
 	 * @param usuarios
 	 * @return
 	 */
-	public List<String> FiltroInteresesComunes(Usuario usuario_a_comparar, List<Usuario> usuarios) {
+	public ArrayList<Usuario> FiltroInteresesComunes(Usuario usuario, ArrayList<Usuario> usuarios) {
 
-		List<String> interesesComunes = new ArrayList<String>(usuario_a_comparar.getIntereses());
+		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
+		ArrayList<Usuario> genteConInteresesComunes = new ArrayList<Usuario>();
+		ArrayList<String> interesesComunes = new ArrayList<String>(this.intereses);
 
-		for (Usuario usuario : usuarios) {
-			interesesComunes.retainAll(usuario.getIntereses());
+		usuariosCompatibles = comprobarCompatibilidad(usuario, usuarios);
+
+		for (int i = 0; i < usuariosCompatibles.size(); i++) {
+			interesesComunes.retainAll(usuariosCompatibles.get(i).getIntereses());
+			if (!interesesComunes.isEmpty())
+				genteConInteresesComunes.add(usuariosCompatibles.get(i));
 		}
-
-		return interesesComunes;
+		return genteConInteresesComunes;
 	}
 
 	/**
@@ -427,17 +438,19 @@ public class Usuario {
 	public ArrayList<Usuario> filtroInteresesOpuestos(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
 
 		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
-		ArrayList<Usuario> genteSinInteresesComunes = new ArrayList<Usuario>();
-		boolean bandera;
-
+		ArrayList<Usuario> genteConPocaCompatiblidad= new ArrayList<Usuario>();
+		int indiceCompatibilidad;
+	
 		usuariosCompatibles = comprobarCompatibilidad(usuario, arrayUsuarios);
 
 		for (int i = 0; i < usuariosCompatibles.size(); i++) {
-			if (this.intereses.containsAll(usuariosCompatibles.get(i).getIntereses()))
-				genteSinInteresesComunes.add(usuariosCompatibles.get(i));
+		
+		indiceCompatibilidad=calcularCompatiblidad(usuariosCompatibles.get(i));
+		
+		if(indiceCompatibilidad<=30)
+			genteConPocaCompatiblidad.add(usuariosCompatibles.get(i));
 		}
-
-		return genteSinInteresesComunes;
+		return genteConPocaCompatiblidad;
 
 	}
 
@@ -451,7 +464,7 @@ public class Usuario {
 
 		// Seleccionar un número aleatorio entre 1 y 3, que será la cantidad de
 		// intereses que tendrá el usuario
-		int cantidadIntereses = rand.nextInt(3) + 1;
+		int cantidadIntereses = 5;
 
 		for (int i = 0; i < cantidadIntereses; i++) {
 			int categoriaAleatoria = rand.nextInt(LISTA_INTERESES.length); // Seleccionar una categoría aleatoria de la
@@ -509,8 +522,8 @@ public class Usuario {
 	public ArrayList<Usuario> comprobarCompatibilidad(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
 		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
 		for (int i = 0; i < arrayUsuarios.size(); i++) {
-			if (!arrayUsuarios.get(i).equals(usuario) && banderaCompatibilidad(arrayUsuarios.get(i))) {
-				usuariosCompatibles.add(usuario);
+			if ((!arrayUsuarios.get(i).equals(usuario)) && banderaCompatibilidad(arrayUsuarios.get(i))) {
+				usuariosCompatibles.add(arrayUsuarios.get(i));
 			}
 		}
 		return usuariosCompatibles;
