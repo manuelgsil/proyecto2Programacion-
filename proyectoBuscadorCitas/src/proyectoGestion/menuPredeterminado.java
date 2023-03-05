@@ -17,11 +17,14 @@ public class menuPredeterminado {
 		ArrayList <Usuario> resultadoFiltro= new ArrayList<Usuario>();
 		cargaUsuarios = cargaUsuarios(cargaUsuarios);
 		Usuario prueba1 = new Usuario ();
-		resultadoFiltro= prueba1.filtroInteresesOpuestos(prueba1, cargaUsuarios);
-		System.out.println(prueba1+"\n usuarioprueba");
+		System.out.println(prueba1.generarUsuarioCompatibleAleatorio(prueba1, cargaUsuarios));
+		 
+		 
+		 
+		/*System.out.println(prueba1+"\n usuarioprueba");
 		for (Usuario usuario : resultadoFiltro) {
 			System.out.println(usuario);
-		}
+		}*/
 		
 
 	}
