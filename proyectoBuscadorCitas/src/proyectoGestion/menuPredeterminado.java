@@ -113,6 +113,7 @@ public class menuPredeterminado {
 
 	/**
 	 * @author Manuel Metodo para crear una instancia de Usuario por parametros.
+	 * 
 	 *         Tiene anidados varios metodos tantos de esta clase como de la clase
 	 *         Util.
 	 */
@@ -166,7 +167,7 @@ public class menuPredeterminado {
 
 			usuarioParametros = new Usuario(infoPersonal, fechaNacimiento, sexo.charAt(0));
 
-			System.out.println("\nPor ultimo, de la siguiente lista escoja los intereses que le parezcan. Min 1");
+			System.out.println("\nPor ultimo, de la siguiente lista escoja los intereses que le parezcan."); // TODO controlar esta entrada
 			System.out.println(Usuario.mostrartInteresesDisponibles());
 
 			usuarioParametros = agregarInteresesUsuario(usuarioParametros);
