@@ -13,7 +13,7 @@ public class Util {
 	private static Scanner inputInt = new Scanner(System.in);
 
 	public static Scanner inputString = new Scanner(System.in);
-	private Random numeroAleatorio = new Random();
+	
 
 	/**
 	 * Genera numeros aleatorios tipo INT entre los limites indicados (INCLUIDOS
@@ -23,11 +23,18 @@ public class Util {
 	 * @param num2 Final de rango
 	 * @return numero aleatorio entre ese rango
 	 */
-	public int generarNumerosAleatorios(int num1, int num2) {
+		public static int generarNumerosAleatorios(int num1, int num2) {
+		    Random numeroAleatorio = new Random();
+		    return numeroAleatorio.nextInt(num1, num2) + 1;
+		}
+		
+		
+		public static int generarNumeroAleatorio() {
+		    Random numeroAleatorio = new Random();
+		    return numeroAleatorio.nextInt();
+		}
 
-		return numeroAleatorio.nextInt(num1, num2) + 1;
-
-	}
+	
 
 	/**
 	 * @author Manuel Este metodo devuelve un String con la informacion del tiempo
@@ -115,6 +122,27 @@ public class Util {
 
 		}
 		return texto;
+	}
+	public static int pedirNumero() {
+		
+	      
+	        int numero = 0;
+	        boolean entradaValida = false;
+	        
+	        while (!entradaValida) {
+	           
+	            try {
+	                numero = inputInt.nextInt();
+	                entradaValida = true;
+	            } catch (Exception e) {
+	                System.out.println("Entrada inválida. Intente nuevamente.");
+	                inputInt.nextLine(); // limpiar el buffer de entrada
+	            }
+	        }
+	        
+	        return numero;		
+	
+		
 	}
 
 }
