@@ -316,10 +316,11 @@ public class menuPredeterminado {
 	 * @return arrayList de usuarios
 	 */
 	public static ArrayList<Usuario> cargaUsuarios(ArrayList<Usuario> cargaUsuarios) {
-
+		ArrayList<String> interesesAleatorios = new ArrayList <String>();
 		Usuario carga1 = new Usuario("Pepe", "Flores", LocalDate.of(1999, 1, 18), "Sevilla", "Espanol", 'H',
 				"Malo malote", "GAY");
-		Usuario carga2 = new Usuario("Ricardo", "Flores", LocalDate.of(1999, 6, 18), "Sevilla", "Espanol", 'H',
+		
+			Usuario	carga2 = new Usuario("Paco", "Azul", LocalDate.of(1999, 6, 18), "Sevilla", "Espanol", 'H',
 				"Malo malote", "BI");
 		Usuario carga3 = new Usuario("Augusto", "Montesierra", LocalDate.of(1984, 2, 18), "Malaga", "Espanol", 'H',
 				"Agustisimo", "HETERO");
@@ -343,7 +344,22 @@ public class menuPredeterminado {
 				"Malo malote", "HETERO");
 		Usuario carga13 = new Usuario("Eustaquia", "Obradora", LocalDate.of(1985, 1, 18), "Sevilla", "Espanol", 'M',
 				"Malo del todo", "GAY");
-
+	
+		carga1.generarInteresesAleatorios();
+		carga2.generarInteresesAleatorios();
+		carga3.generarInteresesAleatorios();
+		carga4.generarInteresesAleatorios();
+		carga5.generarInteresesAleatorios();
+		carga6.generarInteresesAleatorios();
+		carga7.generarInteresesAleatorios();
+		carga8.generarInteresesAleatorios();
+		carga9.generarInteresesAleatorios();
+		carga10.generarInteresesAleatorios();
+		carga11.generarInteresesAleatorios();
+		carga12.generarInteresesAleatorios();
+		carga13.generarInteresesAleatorios();
+		
+		
 		cargaUsuarios.add(carga1);
 		cargaUsuarios.add(carga2);
 		cargaUsuarios.add(carga3);

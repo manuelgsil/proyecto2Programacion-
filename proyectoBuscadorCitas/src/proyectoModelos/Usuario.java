@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Usuario {
@@ -157,9 +159,6 @@ public class Usuario {
 
 	public String calcularCompatiblidad(Usuario usuario_a_comparar) {
 
-		// Tengo que revisar si el string es la mejor opcion o posteriormente quiero
-		// trabajar sobre el menu.
-		// La compatibilidad se calculara si son de la misma orientacion sexual
 		String mensaje = "";
 		boolean bandera;
 		int compatiblidad;
@@ -169,11 +168,10 @@ public class Usuario {
 			compatiblidad = calcularCompatibilidadIntereses(usuario_a_comparar)
 					+ calcularCompatibilidadEdad(usuario_a_comparar) + calcularCompatibilidadCiudad(usuario_a_comparar);
 
-			if (compatiblidad > 100)
-				compatiblidad = 100;
+			compatiblidad = compatiblidad > 100 ? 100 : compatiblidad;
 
-			mensaje = this.nombre+" Tu indice de compatibilidad con " + usuario_a_comparar.getNombre() + " es del : " + compatiblidad
-					+ "%";
+			mensaje = this.nombre + " Tu indice de compatibilidad con\n " + usuario_a_comparar.toString()
+					+ "\nes del : " + compatiblidad + "%";
 		}
 		return mensaje;
 	}
@@ -230,6 +228,9 @@ public class Usuario {
 		return bandera;
 
 	}
+
+	// public String calcularCompatiblidad(Usuario usuario_a_comparar, Predicate<F>
+	// predicado) {
 
 	/**
 	 * @author Manuel Seccion que suma 20 puntos al indice de compatiblidad si son
@@ -423,24 +424,50 @@ public class Usuario {
 
 	}
 
-	public ArrayList <Usuario>filtroInteresesOpuestos(Usuario usuario_a_comparar, ArrayList<Usuario> arrayUsuarios) {
-		/*
-		 * Como la eleccion de intereses "opuestos" entre si es una cuestion bastante
-		 * subjetiva, que implicaria que la definicion de algun interes es excluyente de
-		 * otra (comida sana vs comida basura), y que se puede alejar bastante de la
-		 * precision pretendida en este proyecto, vamos a devolver usuarios que no
-		 * tengan ningun intereses similar.
-		 */ 
-		
-		// TODO Esto esta mal. Tengo que probarlo
+	public ArrayList<Usuario> filtroInteresesOpuestos(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
 
+		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
 		ArrayList<Usuario> genteSinInteresesComunes = new ArrayList<Usuario>();
+		boolean bandera;
 
-		for (Usuario usuario : arrayUsuarios) {
-			if (!this.intereses.containsAll(usuario_a_comparar.getIntereses()))
-				genteSinInteresesComunes.add(usuario_a_comparar);
+		usuariosCompatibles = comprobarCompatibilidad(usuario, arrayUsuarios);
+
+		for (int i = 0; i < usuariosCompatibles.size(); i++) {
+			if (this.intereses.containsAll(usuariosCompatibles.get(i).getIntereses()))
+				genteSinInteresesComunes.add(usuariosCompatibles.get(i));
 		}
+
 		return genteSinInteresesComunes;
+
+	}
+
+	/**
+	 * @author Manuel
+	 * 
+	 */
+	public void generarInteresesAleatorios() {
+		ArrayList<String> intereses = new ArrayList<String>();
+		Random rand = new Random();
+
+		// Seleccionar un número aleatorio entre 1 y 3, que será la cantidad de
+		// intereses que tendrá el usuario
+		int cantidadIntereses = rand.nextInt(3) + 1;
+
+		for (int i = 0; i < cantidadIntereses; i++) {
+			int categoriaAleatoria = rand.nextInt(LISTA_INTERESES.length); // Seleccionar una categoría aleatoria de la
+																			// lista de intereses
+			int interesAleatorio = rand.nextInt(LISTA_INTERESES[categoriaAleatoria].length - 1) + 1; // Seleccionar un
+																										// interés
+																										// aleatorio de
+																										// la categoría
+																										// seleccionada
+
+			String interes = LISTA_INTERESES[categoriaAleatoria][interesAleatorio];
+			if (!intereses.contains(interes)) {
+				intereses.add(interes);
+			}
+		}
+		this.intereses = intereses;
 
 	}
 
@@ -461,12 +488,32 @@ public class Usuario {
 		output += "+------------------+---------------------+\n";
 		output += String.format("| %-16s | %-19s |%n", "Intereses", intereses);
 		output += "+------------------+---------------------+\n";
-		output += "\nDescripciï¿½n:\n";
+		output += String.format("| %-16s | %-19s |%n", "Sexo", sexo);
+		output += "+------------------+---------------------+\n";
+		output += "\nDescripcion:\n";
 		output += "+----------------------------------------+\n";
 		output += String.format("| %-38s |%n", descripcion);
 		output += "+----------------------------------------+\n";
 
 		return output;
+
+	}
+
+	/**
+	 * Manuel Metodo por el que encontramos los usuarios compatibles entre si.
+	 * 
+	 * @param usuario
+	 * @param arrayUsuarios
+	 * @return el array de usuarios compatibles
+	 */
+	public ArrayList<Usuario> comprobarCompatibilidad(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
+		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
+		for (int i = 0; i < arrayUsuarios.size(); i++) {
+			if (!arrayUsuarios.get(i).equals(usuario) && banderaCompatibilidad(arrayUsuarios.get(i))) {
+				usuariosCompatibles.add(usuario);
+			}
+		}
+		return usuariosCompatibles;
 
 	}
 
