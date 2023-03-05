@@ -1,4 +1,4 @@
-package proyectoGestion;
+package proyectoModelos;
 
 import java.time.Duration;
 import java.time.LocalDate;
