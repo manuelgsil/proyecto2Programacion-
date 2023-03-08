@@ -40,6 +40,7 @@ public class Usuario {
 		descripcion = "jaja jiji";
 		orientacionSexual = "HETERO";
 		generarInteresesAleatorios();
+		ciudad="Sevilla";
 
 	}
 
@@ -167,7 +168,7 @@ public class Usuario {
 
 		bandera = banderaCompatibilidad(usuarioComparar);
 		if (bandera) {
-			compatiblidad = calcularCompatibilidadIntereses(usuarioComparar)
+			compatiblidad = 20+ calcularCompatibilidadIntereses(usuarioComparar)
 					+ calcularCompatibilidadEdad(usuarioComparar) + calcularCompatibilidadCiudad(usuarioComparar);
 
 			compatiblidad = compatiblidad > 100 ? 100 : compatiblidad;
@@ -286,7 +287,7 @@ public class Usuario {
 	 */
 	private int calcularCompatibilidadCiudad(Usuario usuarioComparar) {
 
-		return this.ciudad.equals(usuarioComparar.getciudad()) ? 20 : 0;
+		return this.ciudad.equalsIgnoreCase(usuarioComparar.getciudad()) ? 20 : 0;
 
 	}
 
@@ -306,7 +307,7 @@ public class Usuario {
 		List<String> interesesComunes = new ArrayList<String>(this.intereses);
 		interesesComunes.retainAll(usuarioComparar.getIntereses()); // quitamos de la lista todos los intereses que
 																	// no sean comunes
-		return interesesComunes.size() * 10; // el tamanio de esa lista (es decir, cada interes en comun) sera
+		return interesesComunes.size() * 15; // el tamanio de esa lista (es decir, cada interes en comun) sera
 												// multiplicado por 10 y devuelto al metodo principal
 	}
 
@@ -377,7 +378,7 @@ public class Usuario {
 					// controlar los
 					// repetidos y
 					// las mayus
-					intereses.add(interes);
+					intereses.add(interes.toLowerCase());
 			}
 		}
 	}

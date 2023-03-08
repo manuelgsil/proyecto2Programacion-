@@ -12,24 +12,115 @@ public class menuPredeterminado {
 
 	private static Scanner inputInt = new Scanner(System.in);
 	private static Scanner inputString = new Scanner(System.in);
-	private static ArrayList<Usuario> usuarios = new ArrayList(generarUsuariosPrueba(10));
+	private static ArrayList<Usuario> usuarios = new ArrayList(generarUsuariosPrueba(20));
 
 	public static void main(String[] args) {
 
-		ArrayList<Usuario> resultadoFiltro = new ArrayList<Usuario>();
-
 		Usuario prueba1 = new Usuario();
 
-		crearUsuario();
-		/*resultadoFiltro = prueba1.filtroInteresesOpuestos(prueba1, usuarios);
+		menuEmparejamiento(prueba1);
+	}
 
-		for (int i = 0; i < resultadoFiltro.size(); i++) {
-			if (!resultadoFiltro.get(i).equals(prueba1)) {
-				System.out.println(resultadoFiltro.get(i));
-				System.out.println(prueba1.calcularCompatiblidad(resultadoFiltro.get(i)));
+	/**
+	 * @author Manuel Metodo que sirve como primer menu principal y donde anidaremos
+	 *         los metodos principales
+	 */
+	public static void menuMarco() {
+		Usuario usuarioPrograma = null;
+		String despedida = "Hasta otra!";
 
+
+		int opcionUsuario;
+
+		do {
+			almacenPantallazos(1);
+			opcionUsuario = Util.pedirNumero(); // Se controlan las excepciones dentro del Util
+			switch (opcionUsuario) {
+			case 1:
+				usuarioPrograma = crearUsuario();
+
+				break;
+			case 2:
+				if(usuarioPrograma==null)
+					System.out.println("Para acceder a estas opciones debe crear un usuario primero");
+				else
+				menuEmparejamiento(usuarioPrograma);
+
+				break;
+			case 3:
+				System.out.println(despedida);
+
+				break;
+
+			default:
+				break;
 			}
-		}*/
+		} while (opcionUsuario != 3);
+
+	}
+
+	public static Usuario menuEmparejamiento(Usuario usuario) {
+		ArrayList<Usuario> listaFiltrado;
+		Usuario usuarioRandom;
+	
+		Usuario usuarioprueba= new Usuario();
+		int opcion;
+
+		do {
+			almacenPantallazos(2);
+			System.out.println("Introduzca una opcion");
+			opcion = Util.pedirNumero();
+			switch (opcion) {
+			case 1:
+
+				break;
+
+			case 2:
+				listaFiltrado = usuario.filtroInteresesComunes(usuario, usuarios);
+				System.out.println(usuario);
+				for (Usuario resultado : listaFiltrado) {
+					System.out.println(resultado);
+					System.out.println(mostrarCompatiblidad(usuario, resultado));
+				}
+				break;
+
+			case 3:
+				listaFiltrado = usuario.filtroInteresesOpuestos(usuario, usuarios);
+				System.out.println(usuario);
+
+				for (Usuario resultado : listaFiltrado) {
+					System.out.println(resultado);
+					System.out.println(mostrarCompatiblidad(usuario, resultado));
+
+				}
+				break;
+
+			case 4:
+				System.out.println(usuario);
+				usuarioRandom = usuario.generarUsuarioCompatibleAleatorio(usuario, usuarios);
+				if (!usuarioRandom.equals(null)) {
+					System.out.println(usuarioRandom);
+					System.out.println(mostrarCompatiblidad(usuario, usuarioRandom));
+				} else
+					System.out.println("ahora mismo no contamos con nadie compatible aleatoriamente");
+
+				break;
+
+			case 5:
+				break;
+
+			default:
+				break;
+			}
+		} while (opcion != 5);
+		return usuario;
+	}
+
+	public static String mostrarCompatiblidad(Usuario usuarioBase, Usuario usuarioComparado) {
+		String mensaje;
+		mensaje = "Tu indice de compatibilidad con " + usuarioComparado.getNombre() + " es del: "
+				+ usuarioComparado.calcularCompatiblidad(usuarioBase) + "%";
+		return mensaje;
 
 	}
 
@@ -56,11 +147,13 @@ public class menuPredeterminado {
 			break;
 		case 2:
 			bloqueTexto = """
-					ï¿½Como desea buscar?
+					Como desea buscar?
+
 					1. - Filtrando
 					2. - Personas con mismos datos en comun
 					3. - Personas con aficiones opuestas
-					4.- Busqueda aleatoria
+					4. - Busqueda aleatoria
+					5. - Volver atras
 										""";
 			System.out.println(bloqueTexto);
 			break;
@@ -76,39 +169,6 @@ public class menuPredeterminado {
 		default:
 			break;
 		}
-	}
-
-	/**
-	 * @author Manuel Metodo que sirve como primer menu principal y donde anidaremos
-	 *         los metodos principales
-	 */
-	private static void menuMarco() {
-		Usuario usuarioPrograma;
-
-		// TODO Modificarlo segun lo que necesitemos
-
-		int opcionUsuario;
-
-		do {
-			almacenPantallazos(1);
-			opcionUsuario = inputInt.nextInt();
-			switch (opcionUsuario) {
-			case 1:
-				usuarioPrograma = crearUsuario();
-
-				break;
-			case 2:
-
-				break;
-			case 3:
-
-				break;
-
-			default:
-				break;
-			}
-		} while (opcionUsuario != 3);
-
 	}
 
 	/**
@@ -167,7 +227,10 @@ public class menuPredeterminado {
 
 			usuarioParametros = new Usuario(infoPersonal, fechaNacimiento, sexo.charAt(0));
 
-			System.out.println("\nPor ultimo, de la siguiente lista escoja los intereses que le parezcan."); // TODO controlar esta entrada
+			System.out.println("\nPor ultimo, de la siguiente lista escoja los intereses que le parezcan."); // TODO
+																												// controlar
+																												// esta
+																												// entrada
 			System.out.println(Usuario.mostrartInteresesDisponibles());
 
 			usuarioParametros = agregarInteresesUsuario(usuarioParametros);
@@ -347,7 +410,13 @@ public class menuPredeterminado {
 	 */
 	public static ArrayList<Usuario> generarUsuariosPrueba(int cantidad) {
 		ArrayList<Usuario> usuarios = new ArrayList<>();
-		String[] nombres = { "Juan", "Ana", "Pedro", "Maria", "Luisa", "Carlos", "Lucia", "Pablo", "Laura", "Andres" };
+
+		String[] nombresH = { "Juan", "Ricardo", "Pedro", "Pepe", "Felipe", "Carlos", "Cristobal", "Pablo", "Adrian",
+				"Andres" };
+
+		String[] nombresM = { "Cristina", "Ana", "Naturaleza", "Maria", "Luisa", "Marta", "Lucia", "Leonor", "Laura",
+				"Clara" };
+
 		String[] apellidos = { "Garcia", "Martinez", "Fernandez", "Lopez", "Perez", "Gonzalez", "Sanchez", "Romero",
 				"Saez", "Jimenez" };
 		String[] ciudades = { "Madrid", "Barcelona", "Valencia", "Sevilla", "Bilbao", "Zaragoza", "Málaga", "Murcia",
@@ -364,7 +433,15 @@ public class menuPredeterminado {
 		Random rand = new Random();
 
 		for (int i = 0; i < cantidad; i++) {
-			String nombre = nombres[rand.nextInt(nombres.length)];
+
+			char sexo = rand.nextBoolean() ? 'H' : 'M';
+			String nombre;
+			if (sexo == 'H') {
+				nombre = nombresH[rand.nextInt(nombresH.length)];
+			} else {
+				nombre = nombresM[rand.nextInt(nombresH.length)];
+			}
+
 			String apellido = apellidos[rand.nextInt(apellidos.length)];
 			String ciudad = ciudades[rand.nextInt(ciudades.length)];
 			String idioma = idiomas[rand.nextInt(idiomas.length)];
@@ -372,7 +449,7 @@ public class menuPredeterminado {
 			String orientacion = orientaciones[rand.nextInt(orientaciones.length)];
 			LocalDate fechaNacimiento = LocalDate.of(rand.nextInt(50) + 1950, rand.nextInt(12) + 1,
 					rand.nextInt(28) + 1);
-			char sexo = rand.nextBoolean() ? 'H' : 'M';
+
 			Usuario usuario = new Usuario(new String[] { nombre, apellido, ciudad, idioma, descripcion, orientacion },
 					fechaNacimiento, sexo);
 			usuario.generarInteresesAleatorios();

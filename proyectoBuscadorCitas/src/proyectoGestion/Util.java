@@ -135,7 +135,7 @@ public class Util {
 	                numero = inputInt.nextInt();
 	                entradaValida = true;
 	            } catch (Exception e) {
-	                System.out.println("Entrada inválida. Intente nuevamente.");
+	                System.out.println("Inserte un numero.");
 	                inputInt.nextLine(); // limpiar el buffer de entrada
 	            }
 	        }
