@@ -107,9 +107,12 @@ public class Usuario {
 		return fechaNacimiento;
 	}
 
+<<<<<<< HEAD
+=======
 	public int getEdad() {
 		return edad;
 	}
+>>>>>>> branch 'ramaManuel' of https://github.com/manuelgsil/proyecto2Programacion-.git
 
 	public String getIdioma() {
 		return idioma;

@@ -3,7 +3,7 @@ package proyectoGestion;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
 import java.util.Scanner;
 
 import proyectoModelos.Usuario;
@@ -18,9 +18,17 @@ public class menuPredeterminado {
 	public static void main(String[] args) {
 
 		Usuario prueba1 = new Usuario();
-
 		menuEmparejamiento(prueba1);
+
+
+
+
+
+
 	}
+
+	
+	
 
 	/**
 	 * @author Manuel Metodo que sirve como primer menu principal y donde anidaremos
@@ -117,14 +125,23 @@ public class menuPredeterminado {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * @author Manuel 
+	 * 
+	 * Metodo para crear una instancia de Usuario por parametros.
+=======
 	 * @author Manuel Metodo para crear una instancia de Usuario por parametros.
 	 * 
+>>>>>>> branch 'ramaManuel' of https://github.com/manuelgsil/proyecto2Programacion-.git
 	 *         Tiene anidados varios metodos tantos de esta clase como de la clase
 	 *         Util.
 	 */
 	public static Usuario crearUsuario() {
 
 		almacenPantallazos(3);
+
+		String validacion;
+
 		Usuario usuarioParametros;
 		int opcion;
 		String nombre;
@@ -135,6 +152,13 @@ public class menuPredeterminado {
 		String orientacionSexual;
 		String sexo;
 		LocalDate fechaNacimiento;
+	
+		System.out.print("Introduzca su nombre: ");
+		nombre = Util.pedirString();  // Con el util controlamos que los datos que nos introduzca son validos de por si
+		System.out.print("Ahora su apellido: ");
+		apellido = Util.pedirString();
+		System.out.println("Ingrese su fecha de nacimiento");
+		fechaNacimiento = Util.solicitarFecha(); // con este tambien esta validado automaticamente
 
 		do {
 			System.out.print("Introduzca su nombre: ");
@@ -144,6 +168,7 @@ public class menuPredeterminado {
 			apellido = Util.pedirString();
 			System.out.println("Ingrese su fecha de nacimiento");
 			fechaNacimiento = Util.solicitarFecha(); // con este tambien esta validado automaticamente
+
 
 			System.out.print("Ciudad de residencia: ");
 			ciudad = Util.pedirString(); // Quiza seria posible controlar esto pero no lo veo necesario ahora mismo
@@ -187,11 +212,14 @@ public class menuPredeterminado {
 		} while (opcion != 1);
 
 		return usuarioParametros;
+
 	}
 
+
 	/**
-	 * @author Manuel Metodo
-	 * 
+	 * @author Manuel  
+
+	 * @author Manuel Metodo	 * 
 	 *         metodo creado para encapsular el numero de condicionales en la
 	 *         funcion {@link #crearUsuario()} mediante un switch. Segun la opcion
 	 *         que marquemos nos verificara un dato segun distintas condiciones.
