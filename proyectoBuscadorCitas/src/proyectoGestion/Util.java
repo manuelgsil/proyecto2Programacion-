@@ -13,7 +13,7 @@ public class Util {
 	private static Scanner inputInt = new Scanner(System.in);
 
 	public static Scanner inputString = new Scanner(System.in);
-	private Random numeroAleatorio = new Random();
+	
 
 	/**
 	 * Genera numeros aleatorios tipo INT entre los limites indicados (INCLUIDOS
@@ -23,33 +23,27 @@ public class Util {
 	 * @param num2 Final de rango
 	 * @return numero aleatorio entre ese rango
 	 */
-	public int generarNumerosAleatorios(int num1, int num2) {
-
-		return numeroAleatorio.nextInt(num1, num2) + 1;
-
-	}
-
-	private static int comprobadorValoresNegativos(int valor) {
-		boolean error = true;
-		while (error) {
-			if (valor < 0) {
-				System.out.println("Introduzca un valor positivo");
-				valor = inputInt.nextInt();
-			} else
-				error = false;
+		public static int generarNumerosAleatorios(int num1, int num2) {
+		    Random numeroAleatorio = new Random();
+		    return numeroAleatorio.nextInt(num1, num2) + 1;
 		}
-		return valor;
-	}
-
-	private static int comprobadorOpciones(int opcionUsuario, int primeraOpcion, int ultimaOpcion) {
-
-		while (opcionUsuario < primeraOpcion || opcionUsuario > ultimaOpcion) {
-			System.out.println("Introduzca una opcion valida");
-			opcionUsuario = inputString.nextInt();
+		
+		
+		public static int generarNumeroAleatorio() {
+		    Random numeroAleatorio = new Random();
+		    return numeroAleatorio.nextInt();
 		}
-		return opcionUsuario;
-	}
 
+	
+
+	/**
+	 * @author Manuel Este metodo devuelve un String con la informacion del tiempo
+	 *         transcurrido entre dos fechas (segundos,minutos,horas y dias).
+	 * 
+	 * @param fecha1
+	 * @param fecha2
+	 * @return Devuelve un string con la informacion recabada
+	 */
 	public static String calcularDiferencia(LocalDateTime fecha1, LocalDateTime fecha2) {
 		// Calcular la diferencia de tiempo entre las dos fechas
 		Duration duracion = Duration.between(fecha1, fecha2);
@@ -64,29 +58,31 @@ public class Util {
 		return resultado.toString();
 	}
 
+	/**
+	 * @author Manuel Este metodo vuelve a darnos la informacion del tiempo
+	 *         transcurrido entre dos fechas. La informacion que devuelve es un tipo
+	 *         de dato INT y cuenta los dias de diferencia.
+	 * 
+	 * @param fecha1
+	 * @param fecha2
+	 * @return Un dato tipo int que sera la diferencia en dias entre dos fechas.
+	 */
 	public static int calcularDiasDeDiferencia(LocalDateTime fecha1, LocalDateTime fecha2) {
 		LocalDate localDate1 = fecha1.toLocalDate();
 		LocalDate localDate2 = fecha2.toLocalDate();
 		return Period.between(localDate1, localDate2).getDays();
 	}
 
-	public static LocalDate leerFecha() {
-		Scanner scanner = new Scanner(System.in);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-		while (true) {
-			System.out.print("Introduce una fecha (DD/MM/AAAA): ");
-			String entrada = scanner.nextLine();
-
-			try {
-				LocalDate fecha = LocalDate.parse(entrada, formatter);
-				return fecha;
-			} catch (DateTimeParseException e) {
-				System.out.println("Formato de fecha incorrecto. Vuelve a intentarlo.");
-			}
-		}
-	}
-
+	/**
+	 * @author Manuel Metodo que nos sirve para pedirle al usuario que inserte una
+	 *         fecha (LocalDate). Incluye la clase #DateTimeFormatter para que el
+	 *         string que sirve como input sea formateado a LocalDate.
+	 * 
+	 *         Este metodo tambien incluye un blqoue try / catch para las
+	 *         excepciones
+	 * 
+	 * @return devuelve la fecha en LocalDate
+	 */
 	public static LocalDate solicitarFecha() {
 		System.out.println("Ingrese la fecha en formato yyyy-MM-dd: ");
 		Scanner sc = new Scanner(System.in);
@@ -127,4 +123,26 @@ public class Util {
 		}
 		return texto;
 	}
+	public static int pedirNumero() {
+		
+	      
+	        int numero = 0;
+	        boolean entradaValida = false;
+	        
+	        while (!entradaValida) {
+	           
+	            try {
+	                numero = inputInt.nextInt();
+	                entradaValida = true;
+	            } catch (Exception e) {
+	                System.out.println("Inserte un numero.");
+	                inputInt.nextLine(); // limpiar el buffer de entrada
+	            }
+	        }
+	        
+	        return numero;		
+	
+		
+	}
+
 }

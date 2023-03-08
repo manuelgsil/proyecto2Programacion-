@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Usuario {
@@ -11,15 +12,11 @@ public class Usuario {
 	private static int numeroUsuarios;
 
 	private static final String[][] LISTA_INTERESES = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo" },
-			{ "M�sica:", "Rock", "Pop", "Electr�nica" }, { "Arte y cultura:", "Pintura" },
-			{ "Mascotas:", "Perros", "Gatos" }, { "Comida:", "Italiana", "Japonesa", "Mexicana" },
-			{ "Bienestar y salud:", "Yoga", "Realfooder" }, { "Tecnolog�a:", "Informatica", "Hardware" },
-			{ "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
+			{ "Musica:", "Rock", "Pop", "Electronica" },
+			{ "Arte y cultura:", "Pintura", "Literatura", "Filosofia", "Museos" }, { "Mascotas:", "Perros", "Gatos" },
+			{ "Comida:", "Italiana", "Japonesa", "Mexicana" }, { "Bienestar y salud:", "Yoga", "Realfooder" },
+			{ "Tecnologia:", "Informatica", "Hardware" }, { "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
 			{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" } };
-
-	public final String HETERO = "Heterosexual";
-	public final String GAY = "Gay";
-	public final String BI = "Bisexual";
 
 	private String nombre;
 	private String apellido;
@@ -30,66 +27,39 @@ public class Usuario {
 	private char sexo;
 	private String descripcion;
 	private String orientacionSexual;
-	private ArrayList<String> intereses = new ArrayList();
+	private ArrayList<String> intereses;
+	private String [] informacionPersonal;
+	
+	public Usuario() {
+		this.nombre = "prueba";
+		apellido = "masprueba";
+		fechaNacimiento = LocalDate.of(1993, 03, 14);
+		ciudad = "Sevilla";
+		edad = calcularEdad(fechaNacimiento);
+		sexo = 'H';
+		descripcion = "jaja jiji";
+		orientacionSexual = "HETERO";
+		generarInteresesAleatorios();
+		ciudad="Sevilla";
 
-	public Usuario(String nombre, String apellido, LocalDate fechaNacimiento, String ciudad, String idioma, char sexo,
-			String descripcion, String orientacionSexual) {
-
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.fechaNacimiento = fechaNacimiento;
-		this.ciudad = ciudad;
-		this.idioma = idioma;
-		this.edad = calcularEdad(fechaNacimiento);
-		this.descripcion = descripcion;
-		this.orientacionSexual = determinarPreferenciaSexual(orientacionSexual);
-		this.sexo = sexo;
 	}
+
+	public Usuario(String[] informacionPersonal, LocalDate fechaNacimiento, char sexo) {
+	    this.nombre = informacionPersonal[0];
+	    this.apellido = informacionPersonal[1];
+	    this.ciudad = informacionPersonal[2];
+	    this.idioma = informacionPersonal[3];
+	    this.descripcion = informacionPersonal[4];
+	    this.orientacionSexual = informacionPersonal[5];
+	    this.fechaNacimiento = fechaNacimiento;
+	    this.edad = calcularEdad(fechaNacimiento);
+	    this.sexo = sexo;
+	    this.intereses=new ArrayList<String>();
+	}
+	
 
 	public static int getNumeroUsuarios() {
 		return numeroUsuarios;
-	}
-
-	/**
-	 * @author Manuel Con esta funcion devolvemos un String que muestra los
-	 *         intereses definidos como constante
-	 * 
-	 */
-	public static String mostrartInteresesDisponibles() {
-
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < LISTA_INTERESES.length; i++) {
-			sb.append(String.format("%-3d", i + 1));
-			for (int j = 0; j < LISTA_INTERESES[i].length; j++) {
-				sb.append(String.format("%-20s", LISTA_INTERESES[i][j]));
-			}
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
-
-	/**
-	 * @author Manuel Metodo de clase por el cual se introduce el interes
-	 *         seleccionado por el usuario. Esta controlado para que no se repitan
-	 *         los intereses en la misma lista y para que no se pueda elegir el
-	 *         indice de cada categoria
-	 * 
-	 * @param interes Seleccionado por el usuario
-	 */
-	public void agregarListaIntereses(String interes) {
-
-		for (int i = 0; i < LISTA_INTERESES.length; i++) {
-			for (int j = 1; j < LISTA_INTERESES[i].length; j++) { // con j=1 salimos del rango de los indices
-
-				if (LISTA_INTERESES[i][j].equalsIgnoreCase(interes) && !intereses.contains(interes)) // esta doble
-					// clausula nos
-					// permite
-					// controlar los
-					// repetidos y
-					// las mayus
-					intereses.add(interes);
-			}
-		}
 	}
 
 	public String getDescripcion() {
@@ -108,6 +78,10 @@ public class Usuario {
 		this.descripcion = descripcion;
 	}
 
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
+
 	public void setOrientacionSexual(String orientacionSexual) {
 		this.orientacionSexual = orientacionSexual;
 	}
@@ -115,6 +89,10 @@ public class Usuario {
 	public String getciudad() {
 
 		return ciudad;
+	}
+
+	public char getSexo() {
+		return sexo;
 	}
 
 	public String getNombre() {
@@ -129,8 +107,8 @@ public class Usuario {
 		return fechaNacimiento;
 	}
 
-	public String getCiudad() {
-		return ciudad;
+	public int getEdad() {
+		return edad;
 	}
 
 	public String getIdioma() {
@@ -143,6 +121,10 @@ public class Usuario {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String [] getInformacionPersonal() {
+		return informacionPersonal;
 	}
 
 	public void setApellido(String apellido) {
@@ -165,139 +147,296 @@ public class Usuario {
 		this.intereses = intereses;
 	}
 
-	public int getEdad() {
-		return edad;
+	public void setInformacionPersonal(String [] informacionPersonal) {
+		this.informacionPersonal = informacionPersonal;
 	}
 
-	public int calcularEdad(LocalDate fechaNacimiento) {
-		LocalDate fechaActual = LocalDate.now();
+	/**
+	 * @author Manuel Metodo
+	 * 
+	 *         que nos devuelve un INT que refiere al porcentaje de compatibilidad.
+	 *         Para que se efectue el metodo correctamente, tiene una llamada a otro
+	 *         metodo: {@link #banderaCompatibilidad(Usuario)} que comprueba si el
+	 *         sexo y la orientacion sexual de los usuarios es compatible entre si.
+	 * @param usuarioComparar
+	 * @return int con la puntuacion de compatibilidad entre los usuarios
+	 */
+	public int calcularCompatiblidad(Usuario usuarioComparar) {
 
-		return Period.between(fechaNacimiento, fechaActual).getYears();
-
-	}
-	// esto no tiene mucho sentido, tenog que darle una vuelta
-	public String determinarPreferenciaSexual(String orientacionSexual) {
-		if (orientacionSexual.equalsIgnoreCase("Hetero") || orientacionSexual.equalsIgnoreCase("Gay")
-				|| orientacionSexual.equalsIgnoreCase("Bi"));
-
-		return orientacionSexual;
-	}
-
-	public String calcularCompatiblidad(Usuario Usuario_a_comparar) {
-
-		// TODO hay que trabajar sobre este metodo.
-
-		String mensaje = null;
+		boolean bandera;
 		int compatiblidad = 0;
-		int diferenciaEdad = Math.abs(this.edad - Usuario_a_comparar.edad);
-		int num_interesesComunes; // Al tamanioo del array de cosas comunes que tengan lo voy a multiplicar por 10
 
+		bandera = banderaCompatibilidad(usuarioComparar);
+		if (bandera) {
+			compatiblidad = 20+ calcularCompatibilidadIntereses(usuarioComparar)
+					+ calcularCompatibilidadEdad(usuarioComparar) + calcularCompatibilidadCiudad(usuarioComparar);
+
+			compatiblidad = compatiblidad > 100 ? 100 : compatiblidad;
+
+		}
+		return compatiblidad;
+	}
+
+	/**
+	 * @author Manuel Metodo que calcula la edad del usuario una vez que nos da la
+	 *         fecha de nacimiento
+	 * 
+	 * @param fechaNacimiento
+	 * @return la edad del usuario
+	 */
+	private int calcularEdad(LocalDate fechaNacimiento) {
+		LocalDate fechaActual = LocalDate.now();
+	
+		return Period.between(fechaNacimiento, fechaActual).getYears();
+	
+	}
+
+	/**
+	 * @author Manuel
+	 * 
+	 *         Este metodo nos sirve como bandera para calcular la compatibilidad o
+	 *         no. En el caso de que su sexo y orientacion sexual sean
+	 *         incompatibles, no se ejecutara
+	 *         {@link #calcularCompatiblidad(Usuario)}
+	 * 
+	 * @param usuarioComparar
+	 * 
+	 * @return un valor booleano que nos servira como bandera para el metodo
+	 *         {@link #calcularCompatiblidad(Usuario)}
+	 */
+	private boolean banderaCompatibilidad(Usuario usuarioComparar) {
+		boolean bandera = false;
+	
+		final String HETERO = "HETERO"; // CONVERTIMOS LAS OPCIONES EN CONSTANTES
+		final String GAY = "GAY";
+		final String BI = "BI";
+		switch (this.orientacionSexual) { // En el switch ponemos como key la preferencia sexual del usuario
+		// desde aqui realizamos una serie de condicionales segun su orientacion
+		// Sexual
+		case HETERO:
+
+			if (this.sexo != usuarioComparar.getSexo() && usuarioComparar.getOrientacionSexual().equals(HETERO) // Usuarios
+																												// de
+																												// distinto
+																												// sexo
+																												// y
+																												// heterosexuales
+					|| this.sexo != usuarioComparar.getSexo() && usuarioComparar.getOrientacionSexual().equals(BI)) // ESTE
+																													// USUARIO
+																													// ES
+																													// DE
+																													// distinto
+																													// sexo
+																													// al
+																													// otro
+																													// y
+																													// el
+																													// otro
+																													// es
+																													// bisexual
+				bandera = true;
+			break;
+
+		case BI:
+
+			if (this.sexo != usuarioComparar.getSexo() && usuarioComparar.getOrientacionSexual().equals(HETERO) // SEXOS
+																												// DISTINTOS
+																												// Y
+																												// OTRO
+																												// HETERO
+					|| this.sexo == usuarioComparar.getSexo() && usuarioComparar.getOrientacionSexual().equals(GAY)) // SEXOS
+																														// IGUALES
+																														// Y
+																														// EL
+																														// OTRO
+																														// GAY
+				bandera = true;
+			break;
+
+		case GAY:
+			if (this.sexo == usuarioComparar.getSexo() && usuarioComparar.getOrientacionSexual().equals(GAY) // MISMO
+																												// SEXO
+																												// MISMA
+																												// ORIENTACION
+																												// (GAY)
+					|| this.sexo == usuarioComparar.getSexo() && usuarioComparar.getOrientacionSexual().equals(BI)) // MISMO
+																													// SEXO
+																													// Y
+																													// MISMA
+																													// ORIENTACION
+																													// (BI)
+
+				bandera = true;
+
+			break;
+		}
+
+		return bandera;
+
+	}
+
+	/**
+	 * @author Manuel Seccion que suma 20 puntos al indice de compatiblidad si son
+	 *         de la misma ciudad
+	 * @see #calcularCompatibilidadEdad(Usuario). Se emplea esta funcion para
+	 *      reducir la complejidad de estructuras condicionales y hacer el codigo
+	 *      mas legible / mantenible.
+	 * @param usuarioComparar
+	 * @return devuelve mediante un operador ternario 20 de indice de compatiblidad
+	 *         si son de la misma ciudad. 0 en cualquier otro caso
+	 */
+	private int calcularCompatibilidadCiudad(Usuario usuarioComparar) {
+
+		return this.ciudad.equalsIgnoreCase(usuarioComparar.getciudad()) ? 20 : 0;
+
+	}
+
+	/**
+	 * @author Manuel
+	 * 
+	 *         Metodo que se encarga de calcular la compatibilidad en funcion de los
+	 *         intereses en comun.
+	 * @see #calcularCompatibilidadEdad(Usuario). Se emplea esta funcion para
+	 *      reducir la complejidad de estructuras condicionales y hacer el codigo
+	 *      mas legible / mantenible.
+	 * 
+	 * @param usuarioComparar
+	 * @return devuelve el numero de intereses comunes multiplicado por 10
+	 */
+	private int calcularCompatibilidadIntereses(Usuario usuarioComparar) {
 		List<String> interesesComunes = new ArrayList<String>(this.intereses);
-		interesesComunes.retainAll(Usuario_a_comparar.getIntereses());
-
-		if (diferenciaEdad <= 5)
-			compatiblidad = +10;
-		if (this.ciudad.equals(Usuario_a_comparar.getciudad()))
-			compatiblidad = +10;
-
-		num_interesesComunes = interesesComunes.size() * 10;
-		compatiblidad = +num_interesesComunes;
-
-		if (this.orientacionSexual.equals(Usuario_a_comparar.orientacionSexual))
-			compatiblidad = +20;
-
-		// TODO He planteado esto como un String para ahorrame trabajo posteriormente.
-		// Ya veremos si es buena idea o no.
-
-		if (compatiblidad > 100) {
-			mensaje = "PARECE QUE SOIS MUY PERO QUE MUY COMPATIBLES. MUY MAL TENDRIA QUE DARSE\nCOMPATIBILIDAD: "
-					+ compatiblidad;
-		} else {
-			mensaje = "Tu compatiblidad con este usuario es la siguiente: " + compatiblidad;
-		}
-
-
-		return mensaje;
-
+		interesesComunes.retainAll(usuarioComparar.getIntereses()); // quitamos de la lista todos los intereses que
+																	// no sean comunes
+		return interesesComunes.size() * 15; // el tamanio de esa lista (es decir, cada interes en comun) sera
+												// multiplicado por 10 y devuelto al metodo principal
 	}
+
 	/**
-	 * @author DANI_
-	 * Metodo por el cual le damos como entrada un Objeto de la clase Usuario y un ArrayList
-	 * y buscamos a traves de un bucle for-each las personas que tienen intereses comunes y lo delvolvemos
-	 * en otro ArrayList con los usuarios que tienen en comun dichos intereses.
-	 * @param usuario_a_comparar
-	 * @param usuarios
-	 * @return
+	 * @author Manuel
+	 * 
+	 *         Metodo que se encarga de calcular la compatibilidad en funcion de la
+	 *         diferencia de edad.
+	 * @see #calcularCompatibilidadEdad(Usuario). Se emplea esta funcion para
+	 *      reducir la complejidad de estructuras condicionales y hacer el codigo
+	 *      mas legible / mantenible. Se ha empleado un operador ternario para
+	 *      expresar las condiciones en vez de un bloque if / else
+	 * @param usuarioComparar
+	 * @return devuelve 10 si la diferencia de edad es menor o igual 5. Si la
+	 *         diferencia de edad es menor de 10 se devuelve 5. En cualquier otro
+	 *         caso, no suma.
 	 */
-	public  List<String> FiltroInteresesComunes(Usuario usuario_a_comparar,List<Usuario> usuarios) {
+	private int calcularCompatibilidadEdad(Usuario usuarioComparar) {
+		int diferenciaEdad = Math.abs(this.edad - usuarioComparar.edad); // Con esto obtenemos la diferencia de edad
+																			// entre los usuarios
+		int compatiblidad = 0;
 
-		List<String> interesesComunes = new ArrayList<String>(usuario_a_comparar.getIntereses());
+		if (diferenciaEdad <= 5) {
+			compatiblidad = 10;
+		} else if (diferenciaEdad > 5 && diferenciaEdad <= 10)
+			compatiblidad = 5;
+		else
+			compatiblidad = 0;
 
-		for (Usuario usuario : usuarios) {
-			interesesComunes.retainAll(usuario.getIntereses());
-		}
-
-		return interesesComunes;
+		return compatiblidad;
 	}
-	public void filtroInteresesOpuestos(Usuario usuario_a_comparar) {
 
-	}
-
-	@Override
-	public String toString() {
-		String output = "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Nombre", nombre);
-		output += "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Apellido", apellido);
-		output += "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Edad", edad);
-		output += "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Ciudad", ciudad);
-		output += "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Idioma", idioma);
-		output += "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Preferencias", orientacionSexual);
-		output += "+------------------+---------------------+\n";
-		output += String.format("| %-16s | %-19s |%n", "Intereses", intereses);
-		output += "+------------------+---------------------+\n";
-		output += "\nDescripci�n:\n";
-		output += "+----------------------------------------+\n";
-		output += String.format("| %-38s |%n", descripcion);
-		output += "+----------------------------------------+\n";
-
-		return output;
-
-	}
 	/**
-	 * @author DANI_
-	 *Metodo por el cual cogemos y guardamos dentro de un ArrayList de String el metodo 
-	 *{@linkFiltroInteresComunes}, y mostramos a través de un String tanto los intereses que tienen´
-	 *en comun como el "Perfil" de  dicha/s personas, que tienen en comun esos intereses.
+	 * Manuel 
+	 * 	Metodo por el que encontramos los usuarios compatibles entre si.
+	 * 
 	 * @param usuario
-	 * @param usuarios
-	 * @return 
+	 * @param arrayUsuarios
+	 * @return el array de usuarios compatibles
 	 */
-	public String mostrarPersonasConInteresesEnComun(Usuario usuario, List<Usuario> usuarios) {
-		String devolver="";
-		List<String> interesesComunes = FiltroInteresesComunes(usuario, usuarios);
-		
-		for (Usuario u : usuarios) {
-			if (!u.equals(usuario) && u.getIntereses().containsAll(interesesComunes)) {
-			devolver= "Intereses en común: " + interesesComunes+ "\n"+ u.toString();
+	private ArrayList<Usuario> comprobarCompatibilidad(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
+		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
+		for (int i = 0; i < arrayUsuarios.size(); i++) {
+			if ((!arrayUsuarios.get(i).equals(usuario)) && banderaCompatibilidad(arrayUsuarios.get(i))) {
+				usuariosCompatibles.add(arrayUsuarios.get(i));
 			}
 		}
-		return devolver;
+		return usuariosCompatibles;
+	
 	}
+
 	/**
-	 * @author DANI_
-	 * Metodo por el cual filtramos la ciudad que queramos de cada usuario guardandolos en un
-	 * ArrayList con dichos Usuarios que vivan en dicha ciudad.
-	 * @param ciudades
-	 * @param ciudad
-	 * @return
+	 * @author Manuel Metodo de clase por el cual se introduce el interes
+	 *         seleccionado por el usuario. Esta controlado para que no se repitan
+	 *         los intereses en la misma lista y para que no se pueda elegir el
+	 *         indice de cada categoria
+	 * 
+	 * @param interes Seleccionado por el usuario
 	 */
-	public static List<Usuario> filtrarPorCiudad( List<Usuario> ciudades,String ciudad) {
-		List<Usuario> filtradas = new ArrayList<>();
+	public void agregarListaIntereses(String interes) {
+
+		for (int i = 0; i < LISTA_INTERESES.length; i++) {
+			for (int j = 1; j < LISTA_INTERESES[i].length; j++) { // con j=1 salimos del rango de los indices
+
+				if (LISTA_INTERESES[i][j].equalsIgnoreCase(interes) && !intereses.contains(interes)) // esta doble
+					// clausula nos
+					// permite
+					// controlar los
+					// repetidos y
+					// las mayus
+					intereses.add(interes.toLowerCase());
+			}
+		}
+	}
+
+	/**
+	 * @author Manuel Con esta funcion devolvemos un String que muestra los
+	 *         intereses definidos como constante
+	 * 
+	 */
+	public static String mostrartInteresesDisponibles() {
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < LISTA_INTERESES.length; i++) {
+			sb.append(String.format("%-3d", i + 1));
+			for (int j = 0; j < LISTA_INTERESES[i].length; j++) {
+				sb.append(String.format("%-20s", LISTA_INTERESES[i][j]));
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * @author DANI_ Filtra una lista de usuarios que tienen intereses en común con
+	 *         el usuario dado.
+	 *
+	 * @param usuario  El usuario del que se desea encontrar intereses comunes.
+	 * @param usuarios La lista de usuarios en la que se buscarán intereses
+	 *                 comunes.
+	 * @return Una lista de usuarios que tienen intereses en común con el usuario
+	 *         especificado.
+	 */
+	public ArrayList<Usuario> filtroInteresesComunes(Usuario usuario, ArrayList<Usuario> usuarios) {
+
+		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
+		ArrayList<Usuario> genteConInteresesComunes = new ArrayList<Usuario>();
+		ArrayList<String> interesesComunes = new ArrayList<String>(this.intereses);
+
+		usuariosCompatibles = comprobarCompatibilidad(usuario, usuarios);
+
+		for (int i = 0; i < usuariosCompatibles.size(); i++) {
+			interesesComunes.retainAll(usuariosCompatibles.get(i).getIntereses());
+			if (!interesesComunes.isEmpty())
+				genteConInteresesComunes.add(usuariosCompatibles.get(i));
+		}
+		return genteConInteresesComunes;
+	}
+
+	/**
+	 * @author DANI_ Filtra una lista de usuarios por ciudad.
+	 *
+	 * @param ciudades La lista de usuarios a filtrar.
+	 * @param ciudad   La ciudad por la que se desea filtrar.
+	 * @return Una nueva lista que contiene solo los usuarios que viven en la ciudad
+	 *         especificada.
+	 */
+	public static ArrayList<Usuario> filtrarPorCiudad(ArrayList<Usuario> ciudades, String ciudad) {
+		ArrayList<Usuario> filtradas = new ArrayList<>();
 		for (Usuario c : ciudades) {
 			if (c.getciudad().equalsIgnoreCase(ciudad)) {
 				filtradas.add(c);
@@ -305,35 +444,35 @@ public class Usuario {
 		}
 		return filtradas;
 	}
+
 	/**
-	 * @author DANI_
-	 *Metodo por el cual filtramos la edad de un ArrayList de Usuarios entre dos intervalos (Edad
-	 *minima y Edad maxima que queramos filtrar.
-	 * @param edad
-	 * @param edadMinima
-	 * @param edadMaxima
-	 * @return
+	 * @author DANI_ Filtra una lista de usuarios por edad.
+	 *
+	 * @param edad       La lista de usuarios a filtrar.
+	 * @param edadMinima La edad mínima de los usuarios que se desean filtrar.
+	 * @param edadMaxima La edad máxima de los usuarios que se desean filtrar.
+	 * @return Una nueva lista que contiene solo los usuarios cuya edad está dentro
+	 *         del rango especificado.
 	 */
-	public static List<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
-		return edad.stream()
-				.filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
+	public static ArrayList<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
+		return (ArrayList<Usuario>) edad.stream().filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
 				.collect(Collectors.toList());
 	}
+
 	/**
-	 * @author DANI_
-	 * Metodo el cual filtra el idioma que queramos. Mediante un bucle for-each vamos recorriendo y 
-	 * lo vamos comparando con los idiomas de los usuarios, finalmente no añade al ArrayList los usuarios
-	 * que tengan en comun dicho idioma.
-	 * @param idioma de tipo ArrayList
-	 * @param lengua String con el idioma que queremos filtrar.
-	 * @return
+	 * @author DANI_ Filtra una lista de usuarios por idioma.
+	 *
+	 * @param idioma La lista de usuarios a filtrar.
+	 * @param lengua El idioma por el que se desea filtrar.
+	 * @return Una nueva lista que contiene solo los usuarios que hablan el idioma
+	 *         especificado.
 	 */
-	public static List<Usuario> filtrarPorIdioma(List<Usuario> idioma,String lengua){
+	public static ArrayList<Usuario> filtrarPorIdioma(ArrayList<Usuario> idioma, String lengua) {
 
-		List<Usuario> filtrado=new ArrayList<>();
+		ArrayList<Usuario> filtrado = new ArrayList<>();
 
-		for (Usuario c: idioma) {
-			if (c.getIdioma().equalsIgnoreCase(lengua)){
+		for (Usuario c : idioma) {
+			if (c.getIdioma().equalsIgnoreCase(lengua)) {
 				filtrado.add(c);
 
 			}
@@ -343,5 +482,102 @@ public class Usuario {
 
 	}
 
+	/**	Manuel.
+	 * 
+	 * @param usuario
+	 * @param arrayUsuarios
+	 * @return Array de gente con bajo indice de compatibilidad
+	 */
+	public ArrayList<Usuario> filtroInteresesOpuestos(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
+
+		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
+		ArrayList<Usuario> genteConPocaCompatiblidad = new ArrayList<Usuario>();
+		int indiceCompatibilidad;
+
+		usuariosCompatibles = comprobarCompatibilidad(usuario, arrayUsuarios);
+
+		for (int i = 0; i < usuariosCompatibles.size(); i++) {
+
+			indiceCompatibilidad = calcularCompatiblidad(usuariosCompatibles.get(i));
+
+			if (indiceCompatibilidad <= 30)
+				genteConPocaCompatiblidad.add(usuariosCompatibles.get(i));
+		}
+		return genteConPocaCompatiblidad;
+
+	}
+
+	/**
+	 * @author Manuel
+	 * 
+	 */
+	public void generarInteresesAleatorios() {
+		ArrayList<String> intereses = new ArrayList<String>();
+		Random rand = new Random();
+
+		// Seleccionar un n�mero aleatorio entre 1 y 3, que ser� la cantidad de
+		// intereses que tendr� el usuario
+		int cantidadIntereses = 5;
+
+		for (int i = 0; i < cantidadIntereses; i++) {
+			int categoriaAleatoria = rand.nextInt(LISTA_INTERESES.length); // Seleccionar una categoria aleatoria de  lalista de intereses
+			
+			int interesAleatorio = rand.nextInt(LISTA_INTERESES[categoriaAleatoria].length - 1) + 1; // Seleccionar un interes aleatorio de la categoria seleccionada
+
+			String interes = LISTA_INTERESES[categoriaAleatoria][interesAleatorio];
+			if (!intereses.contains(interes)) {
+				intereses.add(interes);
+			}
+		}
+		this.intereses = intereses;
+
+	}
+
+	/**
+	 * @author DANI_ Genera aleatoriamente un usuario compatible con el usuario
+	 *         introducido.
+	 *
+	 * @param usuario       El usuario con el que se va a comprobar la
+	 *                      compatibilidad.
+	 * @param arrayUsuarios La lista de todos los usuarios existentes (incluyendo al
+	 *                      usuario introducido).
+	 * @return Un usuario compatible aleatorio, o null si no se encontró ningún
+	 *         usuario compatible.
+	 */
+	
+	public Usuario generarUsuarioCompatibleAleatorio(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
+	
+		ArrayList<Usuario> usuariosCompatibles = comprobarCompatibilidad(usuario, arrayUsuarios);
+		int numeroAleatorio;
+		Usuario usuarioRandom;
+	
+		if (!usuariosCompatibles.isEmpty()) {
+			numeroAleatorio = Util.generarNumerosAleatorios(0, usuariosCompatibles.size() - 1);
+			usuarioRandom = usuariosCompatibles.get(numeroAleatorio);
+		} else
+			usuarioRandom = null;
+	
+		return usuarioRandom;
+	}
+
+	@Override
+	public String toString() {
+		final String FORMATO_TEXTO = "| %-16s | %-19s |%n";
+		final String SEPARADOR_LINEA = "+---------------------------------------+\n";
+		StringBuilder cadenaFuerte = new StringBuilder();
+
+		cadenaFuerte.append(SEPARADOR_LINEA).append(String.format(FORMATO_TEXTO, "Nombre", nombre))
+				.append(SEPARADOR_LINEA).append(String.format(FORMATO_TEXTO, "Apellido", apellido))
+				.append(SEPARADOR_LINEA).append(String.format(FORMATO_TEXTO, "Edad", edad)).append(SEPARADOR_LINEA)
+				.append(String.format(FORMATO_TEXTO, "Ciudad", ciudad)).append(SEPARADOR_LINEA)
+				.append(String.format(FORMATO_TEXTO, "Idioma", idioma)).append(SEPARADOR_LINEA)
+				.append(String.format(FORMATO_TEXTO, "Preferencias", orientacionSexual)).append(SEPARADOR_LINEA)
+				.append(String.format(FORMATO_TEXTO, "Intereses", intereses)).append(SEPARADOR_LINEA)
+				.append(String.format(FORMATO_TEXTO, "Sexo", sexo)).append(SEPARADOR_LINEA).append("\nDescripcion:\n")
+				.append(SEPARADOR_LINEA).append(String.format("| %-38s |%n", descripcion)).append(SEPARADOR_LINEA);
+
+		return cadenaFuerte.toString(); 
+
+	}
 
 }
