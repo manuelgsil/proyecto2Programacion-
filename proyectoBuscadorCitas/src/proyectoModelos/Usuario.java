@@ -107,9 +107,11 @@ public class Usuario {
 		return fechaNacimiento;
 	}
 
+
 	public int getEdad() {
 		return edad;
 	}
+
 
 	public String getIdioma() {
 		return idioma;
@@ -152,6 +154,20 @@ public class Usuario {
 	}
 
 	/**
+	 * @author Manuel Metodo que calcula la edad del usuario una vez que nos da la
+	 *         fecha de nacimiento
+	 * 
+	 * @param fechaNacimiento
+	 * @return la edad del usuario
+	 */
+	private int calcularEdad(LocalDate fechaNacimiento) {
+		LocalDate fechaActual = LocalDate.now();
+	
+		return Period.between(fechaNacimiento, fechaActual).getYears();
+	
+	}
+
+	/**
 	 * @author Manuel Metodo
 	 * 
 	 *         que nos devuelve un INT que refiere al porcentaje de compatibilidad.
@@ -168,7 +184,7 @@ public class Usuario {
 
 		bandera = banderaCompatibilidad(usuarioComparar);
 		if (bandera) {
-			compatiblidad = 20+ calcularCompatibilidadIntereses(usuarioComparar)
+			compatiblidad = 20 + calcularCompatibilidadIntereses(usuarioComparar)
 					+ calcularCompatibilidadEdad(usuarioComparar) + calcularCompatibilidadCiudad(usuarioComparar);
 
 			compatiblidad = compatiblidad > 100 ? 100 : compatiblidad;
@@ -178,28 +194,13 @@ public class Usuario {
 	}
 
 	/**
-	 * @author Manuel Metodo que calcula la edad del usuario una vez que nos da la
-	 *         fecha de nacimiento
-	 * 
-	 * @param fechaNacimiento
-	 * @return la edad del usuario
-	 */
-	private int calcularEdad(LocalDate fechaNacimiento) {
-		LocalDate fechaActual = LocalDate.now();
-	
-		return Period.between(fechaNacimiento, fechaActual).getYears();
-	
-	}
-
-	/**
 	 * @author Manuel
 	 * 
-	 *         Este metodo nos sirve como bandera para calcular la compatibilidad o
+	 *         Este metodo nos sirve como indicador para calcular la compatibilidad o
 	 *         no. En el caso de que su sexo y orientacion sexual sean
-	 *         incompatibles, no se ejecutara
-	 *         {@link #calcularCompatiblidad(Usuario)}
+	 *         incompatibles, no se ejecutara {@link #calcularCompatiblidad(Usuario)}
 	 * 
-	 * @param usuarioComparar
+	 * @param usuarioComparar el usuario del array que este siendo comparado con el usuario que llame al metodo
 	 * 
 	 * @return un valor booleano que nos servira como bandera para el metodo
 	 *         {@link #calcularCompatiblidad(Usuario)}
@@ -289,9 +290,27 @@ public class Usuario {
 
 		return this.ciudad.equalsIgnoreCase(usuarioComparar.getciudad()) ? 20 : 0;
 
-	}
 
 	/**
+	 * Manuel 
+	 * 	Metodo por el que encontramos los usuarios compatibles entre si.
+	 * 
+	 * @param usuario
+	 * @param arrayUsuarios
+	 * @return el array de usuarios compatibles
+	 */
+	private ArrayList<Usuario> comprobarCompatibilidad(Usuario usuario, ArrayList<Usuario> arrayUsuarios) {
+		ArrayList<Usuario> usuariosCompatibles = new ArrayList<Usuario>();
+		for (int i = 0; i < arrayUsuarios.size(); i++) {
+			if ((!arrayUsuarios.get(i).equals(usuario)) && banderaCompatibilidad(arrayUsuarios.get(i))) {
+				usuariosCompatibles.add(arrayUsuarios.get(i));
+			}
+		}
+		return usuariosCompatibles;
+	
+	}
+
+
 	 * @author Manuel
 	 * 
 	 *         Metodo que se encarga de calcular la compatibilidad en funcion de los
@@ -307,7 +326,7 @@ public class Usuario {
 		List<String> interesesComunes = new ArrayList<String>(this.intereses);
 		interesesComunes.retainAll(usuarioComparar.getIntereses()); // quitamos de la lista todos los intereses que
 																	// no sean comunes
-		return interesesComunes.size() * 15; // el tamanio de esa lista (es decir, cada interes en comun) sera
+		return interesesComunes.size() * 20; // el tamanio de esa lista (es decir, cada interes en comun) sera
 												// multiplicado por 10 y devuelto al metodo principal
 	}
 
@@ -435,8 +454,8 @@ public class Usuario {
 	 * @return Una nueva lista que contiene solo los usuarios que viven en la ciudad
 	 *         especificada.
 	 */
-	public static ArrayList<Usuario> filtrarPorCiudad(ArrayList<Usuario> ciudades, String ciudad) {
-		ArrayList<Usuario> filtradas = new ArrayList<>();
+	public static List<Usuario> filtrarPorCiudad(List<Usuario> ciudades, String ciudad) {
+		List<Usuario> filtradas = new ArrayList<>();F
 		for (Usuario c : ciudades) {
 			if (c.getciudad().equalsIgnoreCase(ciudad)) {
 				filtradas.add(c);
@@ -454,10 +473,9 @@ public class Usuario {
 	 * @return Una nueva lista que contiene solo los usuarios cuya edad está dentro
 	 *         del rango especificado.
 	 */
+
 	public static ArrayList<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
 		return (ArrayList<Usuario>) edad.stream().filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
-				.collect(Collectors.toList());
-	}
 
 	/**
 	 * @author DANI_ Filtra una lista de usuarios por idioma.
@@ -467,9 +485,12 @@ public class Usuario {
 	 * @return Una nueva lista que contiene solo los usuarios que hablan el idioma
 	 *         especificado.
 	 */
+
 	public static ArrayList<Usuario> filtrarPorIdioma(ArrayList<Usuario> idioma, String lengua) {
 
 		ArrayList<Usuario> filtrado = new ArrayList<>();
+
+
 
 		for (Usuario c : idioma) {
 			if (c.getIdioma().equalsIgnoreCase(lengua)) {
@@ -477,9 +498,7 @@ public class Usuario {
 
 			}
 		}
-
 		return filtrado;
-
 	}
 
 	/**	Manuel.
@@ -509,20 +528,34 @@ public class Usuario {
 
 	/**
 	 * @author Manuel
+
+
+	 * 	
+	 * 			Este metodo es una herramienta auxiliar que hemos usado para generar intereses aleatorios en el constructor.
+	 * 	
+	 * @serialData	 Declaramos dentro de la herramienta 3 variables tipo int
+	 * 				cantidadIntereses: el numero de intereses generados aleatoriamente.
+	 * 				categoriaAletoria:corresponderia al indice, o a la categoria de los intereses
+	 * 				interesAelatorio: que seria dentro de la categoria, el intereses seleccionado.
+
 	 * 
 	 */
 	public void generarInteresesAleatorios() {
 		ArrayList<String> intereses = new ArrayList<String>();
-		Random rand = new Random();
 
-		// Seleccionar un n�mero aleatorio entre 1 y 3, que ser� la cantidad de
-		// intereses que tendr� el usuario
+	
+
+		// Seleccionar un numero aleatorio entre 1 y 3, que sera la cantidad de
+		// intereses que tendra el usuario
 		int cantidadIntereses = 5;
+		int categoriaAleatoria;
+		int interesAleatorio;
 
 		for (int i = 0; i < cantidadIntereses; i++) {
-			int categoriaAleatoria = rand.nextInt(LISTA_INTERESES.length); // Seleccionar una categoria aleatoria de  lalista de intereses
+			 categoriaAleatoria = Util.numeroAleatorio.nextInt(LISTA_INTERESES.length); // Seleccionar una categoria aleatoria de  la lista de intereses
 			
-			int interesAleatorio = rand.nextInt(LISTA_INTERESES[categoriaAleatoria].length - 1) + 1; // Seleccionar un interes aleatorio de la categoria seleccionada
+			 interesAleatorio = Util.numeroAleatorio.nextInt(LISTA_INTERESES[categoriaAleatoria].length - 1) + 1; // Seleccionar un interes aleatorio de la categoria seleccionada
+
 
 			String interes = LISTA_INTERESES[categoriaAleatoria][interesAleatorio];
 			if (!intereses.contains(interes)) {

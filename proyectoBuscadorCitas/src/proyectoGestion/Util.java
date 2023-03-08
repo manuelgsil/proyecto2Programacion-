@@ -13,7 +13,8 @@ public class Util {
 	private static Scanner inputInt = new Scanner(System.in);
 
 	public static Scanner inputString = new Scanner(System.in);
-	
+
+	public static Random numeroAleatorio= new Random();
 
 	/**
 	 * Genera numeros aleatorios tipo INT entre los limites indicados (INCLUIDOS
@@ -52,7 +53,7 @@ public class Util {
 		StringBuilder resultado = new StringBuilder();
 		resultado.append("La diferencia de tiempo entre ").append(fecha1).append(" y ").append(fecha2).append(" es:\n")
 				.append(duracion.getSeconds()).append(" segundos\n").append(duracion.toMinutes()).append(" minutos\n")
-				.append(duracion.toHours()).append(" horas\n").append(duracion.toDays()).append(" días");
+				.append(duracion.toHours()).append(" horas\n").append(duracion.toDays()).append(" dï¿½as");
 
 		// Devolver la cadena de resultado
 		return resultado.toString();
@@ -94,7 +95,7 @@ public class Util {
 			LocalDate date = LocalDate.parse(fecha, formatter);
 			return date;
 		} catch (Exception e) {
-			System.out.println("La fecha ingresada no es válida. Intente nuevamente.");
+			System.out.println("La fecha ingresada no es vï¿½lida. Intente nuevamente.");
 			return solicitarFecha();
 		}
 
@@ -135,8 +136,9 @@ public class Util {
 	                numero = inputInt.nextInt();
 	                entradaValida = true;
 	            } catch (Exception e) {
+
 	                System.out.println("Inserte un numero.");
-	                inputInt.nextLine(); // limpiar el buffer de entrada
+	                inputInt.nextLine(); /
 	            }
 	        }
 	        
