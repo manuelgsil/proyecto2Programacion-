@@ -382,58 +382,18 @@ public class menuPredeterminado {
 		return datoVerificado.toUpperCase();
 
 	}
-
 	/**
-	 * @author DANI_ Metodo por el cual se muestra al usuario por pantalla el
-	 *         resultado de filtrar una ciudad.
-	 * @param personasPorCiudad
-	 * @return
+	 *@author DANI_
+	 *Este método pregunta al usuario por un idioma y devuelve una lista de usuarios que hablen ese idioma.
+	 *@param usuarios la lista de usuarios a filtrar por idioma.
+	 *@return una lista de usuarios que hablan el idioma ingresado por el usuario.
 	 */
-	public static ArrayList<Usuario> mostrarFiltroCiudad(ArrayList<Usuario> personasPorCiudad) {
-		for (Usuario u : personasPorCiudad) {
-			System.out.println(u.getNombre());
-		}
-		return personasPorCiudad;
-
-	}
-
-	/**
-	 * @author DANI_ Metodo por el cual se muestra al usuario por pantalla el
-	 *         resultado de filtrar por edad.
-	 * @param personasPorCiudad
-	 * @return
-	 */
-	public static ArrayList<Usuario> mostrarFiltroEdad(ArrayList<Usuario> personasEnRangoDeEdad) {
-		for (Usuario persona : personasEnRangoDeEdad) {
-			System.out.println(persona.getNombre());
-		}
-		return personasEnRangoDeEdad;
-
-	}
-
-	/**
-	 * @author DANI_ Metodo por el cual se muestra al usuario por pantalla el
-	 *         resultado de filtrar por idioma.
-	 * @param personasPorCiudad
-	 * @return
-	 */
-
-	public static ArrayList<Usuario> mostrarFiltroIdioma(ArrayList<Usuario> personasIdioma) {
-		for (Usuario persona : personasIdioma) {
-			System.out.println(persona.getNombre());
-		}
-		return personasIdioma;
-
-	}
 	public static ArrayList<Usuario> preguntaFiltroIdioma(ArrayList<Usuario> usuarios) {
-		Scanner sc = new Scanner(System.in);
 		ArrayList<Usuario> personasPorIdioma;
 		String idioma="";
 		System.out.println("Dime el idioma que quieres filtar");
-		idioma=sc.nextLine();
+		idioma=Util.pedirString();
 		return personasPorIdioma = Usuario.filtrarPorIdioma(usuarios, idioma);
-		
-
 
 	}
 
@@ -448,14 +408,11 @@ public class menuPredeterminado {
 		ArrayList<Usuario> personasPorEdad;
 		int minimo;
 		int maximo;
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Dime la Edad Minima que quieres filtrar");
-		minimo = sc.nextInt();
+		minimo = Util.pedirNumero();
 		System.out.println("Dime la Edad Maxima que quieres filtrar");
-		maximo = sc.nextInt();
-
+		maximo = Util.pedirNumero();
 		return personasPorEdad = Usuario.filtrarPorEdad(usuarios, minimo, maximo);
-
 
 	}
 
@@ -469,13 +426,10 @@ public class menuPredeterminado {
 	 */
 
 	public static ArrayList<Usuario> preguntaFiltrosCiudad(ArrayList<Usuario> usuarios) {
-		Scanner sc = new Scanner(System.in);
 		ArrayList<Usuario> personasPorCiudad;
 		String entradaDatos;
 		System.out.println("Dime la Ciudad que quieres Filtrar");
-
-		entradaDatos = sc.nextLine();
-
+		entradaDatos = Util.pedirString();
 		personasPorCiudad = Usuario.filtrarPorCiudad(usuarios, entradaDatos);
 		return personasPorCiudad;
 
