@@ -7,12 +7,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 import proyectoModelos.Usuario;
+import proyectoModelos.Util;
 
 public class menuPredeterminado {
 
 	private static Scanner inputInt = new Scanner(System.in);
 	private static Scanner inputString = new Scanner(System.in);
-	private static ArrayList<Usuario> usuarios = new ArrayList(generarUsuariosPrueba(20));
+	private static ArrayList<Usuario> usuarios = new ArrayList(generarUsuariosPrueba(30));
 
 	public static void main(String[] args) {
 
@@ -29,7 +30,6 @@ public class menuPredeterminado {
 		Usuario usuarioPrograma = null;
 		String despedida = "Hasta otra!";
 
-
 		int opcionUsuario;
 
 		do {
@@ -41,10 +41,10 @@ public class menuPredeterminado {
 
 				break;
 			case 2:
-				if(usuarioPrograma==null)
+				if (usuarioPrograma == null)
 					System.out.println("Para acceder a estas opciones debe crear un usuario primero");
 				else
-				menuEmparejamiento(usuarioPrograma);
+					menuEmparejamiento(usuarioPrograma);
 
 				break;
 			case 3:
@@ -62,8 +62,8 @@ public class menuPredeterminado {
 	public static Usuario menuEmparejamiento(Usuario usuario) {
 		ArrayList<Usuario> listaFiltrado;
 		Usuario usuarioRandom;
-	
-		Usuario usuarioprueba= new Usuario();
+
+		Usuario usuarioprueba = new Usuario();
 		int opcion;
 
 		do {
@@ -114,61 +114,6 @@ public class menuPredeterminado {
 			}
 		} while (opcion != 5);
 		return usuario;
-	}
-
-	public static String mostrarCompatiblidad(Usuario usuarioBase, Usuario usuarioComparado) {
-		String mensaje;
-		mensaje = "Tu indice de compatibilidad con " + usuarioComparado.getNombre() + " es del: "
-				+ usuarioComparado.calcularCompatiblidad(usuarioBase) + "%";
-		return mensaje;
-
-	}
-
-	/**
-	 * @author Manuel
-	 * 
-	 *         Metodo donde almacenanmos una variable String con el texto de cada
-	 *         menu para usarlo en distintas partes del codigo
-	 * 
-	 * 
-	 */
-	private static void almacenPantallazos(int numeroPantallazo) {
-		String bloqueTexto;
-		switch (numeroPantallazo) {
-		case 1:
-			bloqueTexto = """
-					Que desea hacer?
-					1. - Aniadir una nueva persona
-					2. - Buscar emparejamientos
-					3. - Salir del programa
-					""";
-			System.out.println(bloqueTexto);
-
-			break;
-		case 2:
-			bloqueTexto = """
-					Como desea buscar?
-
-					1. - Filtrando
-					2. - Personas con mismos datos en comun
-					3. - Personas con aficiones opuestas
-					4. - Busqueda aleatoria
-					5. - Volver atras
-										""";
-			System.out.println(bloqueTexto);
-			break;
-		case 3:
-			bloqueTexto = """
-					A continuacion podra introducir los datos de su ficha como usuario
-
-					Si no esta contento con el resultado puede volver a introducir los datos
-											""";
-			System.out.println(bloqueTexto);
-			break;
-
-		default:
-			break;
-		}
 	}
 
 	/**
@@ -245,43 +190,21 @@ public class menuPredeterminado {
 	}
 
 	/**
-	 * @author Manuel Este metodo encapsula la manera de aniadir intereses al
-	 *         usuario en cuestion
-	 * @param usuarioParametros Se debe introducir el usuario que hayamos creado
-	 *                          para ir agregando intereses al arraylist
-	 * @return devuelve un arraylist con todos los intereses seleccionado por el
-	 *         usuario
-	 */
-	static Usuario agregarInteresesUsuario(Usuario usuarioParametros) {
-		boolean bandera = true;
-		String interes;
-		while (bandera) {
-
-			interes = Util.pedirString();
-			if (interes.equalsIgnoreCase("fin"))
-				bandera = false;
-
-			usuarioParametros.agregarListaIntereses(interes);
-		}
-		return usuarioParametros;
-
-	}
-
-	/**
 	 * @author Manuel Metodo
 	 * 
 	 *         metodo creado para encapsular el numero de condicionales en la
 	 *         funcion {@link #crearUsuario()} mediante un switch. Segun la opcion
 	 *         que marquemos nos verificara un dato segun distintas condiciones.
-	 * 
+	 * 			
 	 * 
 	 * @param numeroSwitch tenemos que indicar que case queremos aplicar SIENDO EL 1
 	 *                     PARA LA ORIENTACION SEXUAL Y EL 2 PARA SU SEXO
+	 *                     
+	 *                     
 	 * @return el dato verificado segun los parametros de cada condicion
 	 */
 	public static String delimitadorOpcionesCreacionUsuario(int numeroSwitch) {
-// con este metodo auxiliar vamos a controlar las entradas de datos que necesitan de algo mas de verificacion
-		// las que no puedo controlar con el Util.pedirString vaya
+		//
 		String datoVerificado = "";
 		boolean bandera = true;
 
@@ -363,9 +286,9 @@ public class menuPredeterminado {
 
 	/**
 	 * @author DANI_ Metodo por el cual mostramos al usuario un filtro de edad,
-	 *         donde se le preguta al usuario un minimo un maximo de aÃ±os y luego
-	 *         se guarda el resultado en un ArrayList y despues se llama a otro
-	 *         metodo por el cual se muestra por pantalla.
+	 *         donde se le preguta al usuario un minimo un maximo de aÃ±os y luego se
+	 *         guarda el resultado en un ArrayList y despues se llama a otro metodo
+	 *         por el cual se muestra por pantalla.
 	 * @param usuarios
 	 */
 	public static void preguntaFiltroEdad(List<Usuario> usuarios) {
@@ -404,59 +327,148 @@ public class menuPredeterminado {
 	}
 
 	/**
-	 * @author Manuel
+	 * @author Manuel 
+	 * 
+	 * 		   Metodo de la clase menu que nos generara un array de usuarios
+	 *         aleatorios segun la informacion provista. Como parametro de entrada
+	 *         hay que indicar el numero de usuarios que se desea obtener.
 	 * @param cantidad de usuarios de prueba
-	 * @return Un array con dichos usuarios
+	 * @return Devuelve un array con dichos usuarios
 	 */
 	public static ArrayList<Usuario> generarUsuariosPrueba(int cantidad) {
 		ArrayList<Usuario> usuarios = new ArrayList<>();
 
-		String[] nombresH = { "Juan", "Ricardo", "Pedro", "Pepe", "Felipe", "Carlos", "Cristobal", "Pablo", "Adrian",
+		String[] nombresH = { "Juan", "Ricardo", "Pedro", "Pepe", "Felipe", "Carlos", "Cristobal", "Pablo", "Adrian", //Nombres para hombres
 				"Andres" };
 
-		String[] nombresM = { "Cristina", "Ana", "Naturaleza", "Maria", "Luisa", "Marta", "Lucia", "Leonor", "Laura",
+		String[] nombresM = { "Cristina", "Ana", "Naturaleza", "Maria", "Luisa", "Marta", "Lucia", "Leonor", "Laura",//Nombres para mujeres
 				"Clara" };
 
 		String[] apellidos = { "Garcia", "Martinez", "Fernandez", "Lopez", "Perez", "Gonzalez", "Sanchez", "Romero",
 				"Saez", "Jimenez" };
-		String[] ciudades = { "Madrid", "Barcelona", "Valencia", "Sevilla", "Bilbao", "Zaragoza", "Málaga", "Murcia",
+		String[] ciudades = { "Madrid", "Barcelona", "Valencia", "Sevilla", "Bilbao", "Zaragoza", "Malaga", "Murcia",
 				"Palma de Mallorca", "Las Palmas" };
-		String[] idiomas = { "Espaniol", "Ingles", "Frances", "Aleman", "Portugues", "Italiano", "Chino", "Japones",
-				"Coreano", "Ruso" };
+		String[] idiomas = { "Espaniol", "Ingles", "Frances", "Aleman" };
 		String[] descripciones = { "Me gusta viajar y conocer nuevos lugares",
 				"Soy una persona muy activa y deportista", "Me encanta leer y pasar tiempo en casa",
 				"Soy muy extrovertido y me gusta hacer nuevos amigos", "Me considero una persona tranquila y relajada",
-				"Me apasiona la música y toco varios instrumentos",
+				"Me apasiona la mï¿½sica y toco varios instrumentos",
 				"Soy un amante de los animales y tengo varias mascotas", "Me gusta cocinar y probar nuevos platos",
 				"Soy una persona muy creativa y me gusta dibujar y pintar", "Me encanta el cine y las series" };
 		String[] orientaciones = { "HETERO", "GAY", "BI" };
-		Random rand = new Random();
 
-		for (int i = 0; i < cantidad; i++) {
+		Usuario usuario;
+		String apellido;
+		String ciudad;
+		String idioma;
+		String descripcion;
+		String orientacion;
+		LocalDate fechaNacimiento;
 
-			char sexo = rand.nextBoolean() ? 'H' : 'M';
+		for (int i = 0; i < cantidad; i++) { // el bucle genera usuarios segun el parametro de cantidad indicado
+
+			char sexo = Util.numeroAleatorio.nextBoolean() ? 'H' : 'M';
 			String nombre;
 			if (sexo == 'H') {
-				nombre = nombresH[rand.nextInt(nombresH.length)];
+				nombre = nombresH[Util.numeroAleatorio.nextInt(nombresH.length)]; // condicional para elegir el nombre segun su sexo
 			} else {
-				nombre = nombresM[rand.nextInt(nombresH.length)];
+				nombre = nombresM[Util.numeroAleatorio.nextInt(nombresH.length)];
 			}
 
-			String apellido = apellidos[rand.nextInt(apellidos.length)];
-			String ciudad = ciudades[rand.nextInt(ciudades.length)];
-			String idioma = idiomas[rand.nextInt(idiomas.length)];
-			String descripcion = descripciones[rand.nextInt(descripciones.length)];
-			String orientacion = orientaciones[rand.nextInt(orientaciones.length)];
-			LocalDate fechaNacimiento = LocalDate.of(rand.nextInt(50) + 1950, rand.nextInt(12) + 1,
-					rand.nextInt(28) + 1);
+			apellido = apellidos[Util.numeroAleatorio.nextInt(apellidos.length)];
+			ciudad = ciudades[Util.numeroAleatorio.nextInt(ciudades.length)];
+			idioma = idiomas[Util.numeroAleatorio.nextInt(idiomas.length)];
+			descripcion = descripciones[Util.numeroAleatorio.nextInt(descripciones.length)];
+			orientacion = orientaciones[Util.numeroAleatorio.nextInt(orientaciones.length)];
+			fechaNacimiento = LocalDate.of(Util.numeroAleatorio.nextInt(50) + 1950,
+					Util.numeroAleatorio.nextInt(12) + 1, Util.numeroAleatorio.nextInt(28) + 1);
 
-			Usuario usuario = new Usuario(new String[] { nombre, apellido, ciudad, idioma, descripcion, orientacion },
-					fechaNacimiento, sexo);
+			String[] informacionPersonal = new String[] { nombre, apellido, ciudad, idioma, descripcion, orientacion };
+
+			usuario = new Usuario(informacionPersonal, fechaNacimiento, sexo);
 			usuario.generarInteresesAleatorios();
 			usuarios.add(usuario);
 
 		}
 		return usuarios;
+	}
+
+	/**
+	 * @author Manuel
+	 * 
+	 *         Metodo donde almacenanmos una variable String con el texto de cada
+	 *         menu para usarlo en distintas partes del codigo
+	 * 
+	 * 
+	 */
+	private static void almacenPantallazos(int numeroPantallazo) {
+		String bloqueTexto;
+		switch (numeroPantallazo) {
+		case 1:
+			bloqueTexto = """
+					Que desea hacer?
+					1. - Aniadir una nueva persona
+					2. - Buscar emparejamientos
+					3. - Salir del programa
+					""";
+			System.out.println(bloqueTexto);
+	
+			break;
+		case 2:
+			bloqueTexto = """
+					Como desea buscar?
+	
+					1. - Filtrando
+					2. - Personas con mismos datos en comun
+					3. - Personas con aficiones opuestas
+					4. - Busqueda aleatoria
+					5. - Volver atras
+										""";
+			System.out.println(bloqueTexto);
+			break;
+		case 3:
+			bloqueTexto = """
+					A continuacion podra introducir los datos de su ficha como usuario
+	
+					Si no esta contento con el resultado puede volver a introducir los datos
+											""";
+			System.out.println(bloqueTexto);
+			break;
+	
+		default:
+			break;
+		}
+	}
+
+	public static String mostrarCompatiblidad(Usuario usuarioBase, Usuario usuarioComparado) {
+		String mensaje;
+		mensaje = "Tu indice de compatibilidad con " + usuarioComparado.getNombre() + " es del: "
+				+ usuarioComparado.calcularCompatiblidad(usuarioBase) + "%";
+		return mensaje;
+	
+	}
+
+	/**
+	 * @author Manuel Este metodo encapsula la manera de aniadir intereses al
+	 *         usuario en cuestion
+	 * @param usuarioParametros Se debe introducir el usuario que hayamos creado
+	 *                          para ir agregando intereses al arraylist
+	 * @return devuelve un arraylist con todos los intereses seleccionado por el
+	 *         usuario
+	 */
+	static Usuario agregarInteresesUsuario(Usuario usuarioParametros) {
+		boolean bandera = true;
+		String interes;
+		while (bandera) {
+	
+			interes = Util.pedirString();
+			if (interes.equalsIgnoreCase("fin"))
+				bandera = false;
+	
+			usuarioParametros.agregarListaIntereses(interes);
+		}
+		return usuarioParametros;
+	
 	}
 
 }
