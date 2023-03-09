@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ public class Util {
 	private static Scanner inputInt = new Scanner(System.in);
 
 	public static Scanner inputString = new Scanner(System.in);
-	
+	public static Random numeroAleatorio = new Random();
 
 	/**
 	 * Genera numeros aleatorios tipo INT entre los limites indicados (INCLUIDOS
@@ -23,18 +22,15 @@ public class Util {
 	 * @param num2 Final de rango
 	 * @return numero aleatorio entre ese rango
 	 */
-		public static int generarNumerosAleatorios(int num1, int num2) {
-		    Random numeroAleatorio = new Random();
-		    return numeroAleatorio.nextInt(num1, num2) + 1;
-		}
-		
-		
-		public static int generarNumeroAleatorio() {
-		    Random numeroAleatorio = new Random();
-		    return numeroAleatorio.nextInt();
-		}
+	public static int generarNumerosAleatorios(int num1, int num2) {
 
-	
+		return numeroAleatorio.nextInt(num1, num2) + 1;
+	}
+
+	public static int generarNumeroAleatorio() {
+
+		return numeroAleatorio.nextInt();
+	}
 
 	/**
 	 * @author Manuel Este metodo devuelve un String con la informacion del tiempo
@@ -84,20 +80,23 @@ public class Util {
 	 * @return devuelve la fecha en LocalDate
 	 */
 	public static LocalDate solicitarFecha() {
-		System.out.println("Ingrese la fecha en formato yyyy-MM-dd: ");
-		Scanner sc = new Scanner(System.in);
-		String fecha = sc.nextLine();
-
+		LocalDate date = null;
+		boolean fechaValida = false;
+		Scanner sc;
+		String fecha;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-		try {
-			LocalDate date = LocalDate.parse(fecha, formatter);
-			return date;
-		} catch (Exception e) {
-			System.out.println("La fecha ingresada no es válida. Intente nuevamente.");
-			return solicitarFecha();
+		while (!fechaValida) {
+			System.out.println("Ingrese la fecha en formato yyyy-MM-dd: ");
+			sc = new Scanner(System.in);
+			fecha = sc.nextLine();
+			try {
+				date = LocalDate.parse(fecha, formatter);
+				fechaValida = true;
+			} catch (Exception e) {
+				System.out.println("La fecha ingresada no es valida. Intente nuevamente.");
+			}
 		}
-
+		return date;
 	}
 
 	/**
@@ -123,26 +122,25 @@ public class Util {
 		}
 		return texto;
 	}
+
 	public static int pedirNumero() {
-		
-	      
-	        int numero = 0;
-	        boolean entradaValida = false;
-	        
-	        while (!entradaValida) {
-	           
-	            try {
-	                numero = inputInt.nextInt();
-	                entradaValida = true;
-	            } catch (Exception e) {
-	                System.out.println("Inserte un numero.");
-	                inputInt.nextLine(); // limpiar el buffer de entrada
-	            }
-	        }
-	        
-	        return numero;		
-	
-		
+
+		int numero = 0;
+		boolean entradaValida = false;
+
+		while (!entradaValida) {
+
+			try {
+				numero = inputInt.nextInt();
+				entradaValida = true;
+			} catch (Exception e) {
+				System.out.println("Inserte un numero.");
+				inputInt.nextLine(); // limpiar el buffer de entrada
+			}
+		}
+
+		return numero;
+
 	}
 
 }

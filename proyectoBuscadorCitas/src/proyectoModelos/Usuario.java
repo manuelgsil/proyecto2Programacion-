@@ -4,18 +4,17 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Usuario {
 
-	private static int numeroUsuarios;
+	private static int numeroUsuarios; // Atributo que se penso de cara a una implementacion de usuarioPremium
 
-	private static final String[][] LISTA_INTERESES = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo" },
-			{ "Musica:", "Rock", "Pop", "Electronica" },
+	private static final String[][] LISTA_INTERESES = { { "Deportes:", "Futbol", "Baloncesto", "Tenis", "Boxeo","Padel" },
+			{ "Musica:", "Rock", "Pop", "Electronica","Rap","Clasica","Sardanas"},
 			{ "Arte y cultura:", "Pintura", "Literatura", "Filosofia", "Museos" }, { "Mascotas:", "Perros", "Gatos" },
 			{ "Comida:", "Italiana", "Japonesa", "Mexicana" }, { "Bienestar y salud:", "Yoga", "Realfooder" },
-			{ "Tecnologia:", "Informatica", "Hardware" }, { "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
+			{ "Tecnologia:", "Informatica", "Hardware","MacOs","Android boy" }, { "Videojuegos:", "Rpg", "Estrategia", "Plataformas" },
 			{ "Cine y TV:", "Cine clasico", "Series TV", "Ciencia ficcion" } };
 
 	private String nombre;
@@ -31,16 +30,17 @@ public class Usuario {
 	private String [] informacionPersonal;
 	
 	public Usuario() {
-		this.nombre = "prueba";
-		apellido = "masprueba";
+		this.nombre = "nombrePrueba";
+		apellido = "apellidoPrueba";
 		fechaNacimiento = LocalDate.of(1993, 03, 14);
 		ciudad = "Sevilla";
 		edad = calcularEdad(fechaNacimiento);
 		sexo = 'H';
-		descripcion = "jaja jiji";
+		descripcion = "descripcionPrueba";
 		orientacionSexual = "HETERO";
 		generarInteresesAleatorios();
 		ciudad="Sevilla";
+		idioma="Espaniol";
 
 	}
 
@@ -72,7 +72,7 @@ public class Usuario {
 
 	public static void setNumeroUsuarios(int numeroUsuarios) {
 		Usuario.numeroUsuarios = numeroUsuarios;
-	}
+	} 
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
@@ -133,6 +133,16 @@ public class Usuario {
 
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public static String[][] getListaIntereses() {
+		return LISTA_INTERESES;
+	}
+
+
+
+	public void setEdad(int edad) {
+		this.edad = edad;
 	}
 
 	public void setCiudad(String ciudad) {
@@ -430,14 +440,15 @@ public class Usuario {
 	/**
 	 * @author DANI_ Filtra una lista de usuarios por ciudad.
 	 *
-	 * @param ciudades La lista de usuarios a filtrar.
+	 * @param usuarios La lista de usuarios a filtrar.
 	 * @param ciudad   La ciudad por la que se desea filtrar.
 	 * @return Una nueva lista que contiene solo los usuarios que viven en la ciudad
 	 *         especificada.
 	 */
-	public static List<Usuario> filtrarPorCiudad(List<Usuario> ciudades, String ciudad) {
-		List<Usuario> filtradas = new ArrayList<>();
-		for (Usuario c : ciudades) {
+	public static ArrayList<Usuario> filtrarPorCiudad(List<Usuario> usuarios, String ciudad) {
+		ArrayList<Usuario> filtradas = new ArrayList<>();
+		
+		for (Usuario c : usuarios) {
 			if (c.getciudad().equalsIgnoreCase(ciudad)) {
 				filtradas.add(c);
 			}
@@ -454,8 +465,8 @@ public class Usuario {
 	 * @return Una nueva lista que contiene solo los usuarios cuya edad está dentro
 	 *         del rango especificado.
 	 */
-	public static List<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
-		return edad.stream().filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
+	public static ArrayList<Usuario> filtrarPorEdad(List<Usuario> edad, int edadMinima, int edadMaxima) {
+		return (ArrayList<Usuario>) edad.stream().filter(ciudades -> ciudades.getEdad() >= edadMinima && ciudades.getEdad() <= edadMaxima)
 				.collect(Collectors.toList());
 	}
 
@@ -467,9 +478,9 @@ public class Usuario {
 	 * @return Una nueva lista que contiene solo los usuarios que hablan el idioma
 	 *         especificado.
 	 */
-	public static List<Usuario> filtrarPorIdioma(List<Usuario> idioma, String lengua) {
+	public static ArrayList<Usuario> filtrarPorIdioma(List<Usuario> idioma, String lengua) {
 
-		List<Usuario> filtrado = new ArrayList<>();
+		ArrayList<Usuario> filtrado = new ArrayList<>();
 
 		for (Usuario c : idioma) {
 			if (c.getIdioma().equalsIgnoreCase(lengua)) {
@@ -513,16 +524,16 @@ public class Usuario {
 	 */
 	public void generarInteresesAleatorios() {
 		ArrayList<String> intereses = new ArrayList<String>();
-		Random rand = new Random();
+		
 
 		// Seleccionar un n�mero aleatorio entre 1 y 3, que ser� la cantidad de
 		// intereses que tendr� el usuario
 		int cantidadIntereses = 5;
 
 		for (int i = 0; i < cantidadIntereses; i++) {
-			int categoriaAleatoria = rand.nextInt(LISTA_INTERESES.length); // Seleccionar una categoria aleatoria de  lalista de intereses
+			int categoriaAleatoria = Util.numeroAleatorio.nextInt(LISTA_INTERESES.length); // Seleccionar una categoria aleatoria de  lalista de intereses
 			
-			int interesAleatorio = rand.nextInt(LISTA_INTERESES[categoriaAleatoria].length - 1) + 1; // Seleccionar un interes aleatorio de la categoria seleccionada
+			int interesAleatorio = Util.numeroAleatorio.nextInt(LISTA_INTERESES[categoriaAleatoria].length - 1) + 1; // Seleccionar un interes aleatorio de la categoria seleccionada
 
 			String interes = LISTA_INTERESES[categoriaAleatoria][interesAleatorio];
 			if (!intereses.contains(interes)) {
