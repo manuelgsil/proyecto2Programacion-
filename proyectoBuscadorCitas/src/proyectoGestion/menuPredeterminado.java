@@ -12,7 +12,7 @@ public class menuPredeterminado {
 	private static ArrayList<Usuario> usuarios = new ArrayList(generarUsuariosPrueba(20));
 
 	public static void main(String[] args) {
-
+	menuMarco()
 
 	}
 
