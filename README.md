@@ -21,3 +21,7 @@ que nos han servido tanto como para agilizar la escritura  del código, como par
 Ejemplo de esto sería las llamadas al método Util.pedirString que aparte de contener un bloque TryCatch
 tiene una condición de expresión regular que no permiten la entrada de espacios en blanco o la inserción de números.
 
+ 
+//// En menuPredeterminado queda por resolver el hecho de que al seleccionar la busqueda por filtros, esos usuarios filtrados sean a su vez compatibles
+con el mismo usuario que busca. Es decir, actualmente salen los usuarios que cumplen los criterios de la busqueda pero pueden ser del mismo sexo y/o
+de distinta orientacion sexual.
